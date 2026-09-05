@@ -247,8 +247,17 @@ footer{background:var(--navy);color:#fff;padding:55px 0 0}
   .method-grid{grid-template-columns:repeat(3,1fr)}
 }
 @media(max-width:800px){
-  .container{width:calc(100% - 34px)}
-  .links{display:none}.menu{display:block}.cv{display:none}
+  .container{width:calc(100% - 30px)}
+  .navbar{height:68px;gap:10px}
+  .links{display:none}
+  .menu{display:block;flex-shrink:0;padding:8px;cursor:pointer}
+  .actions{gap:6px}
+  .icon{width:34px;height:34px}
+  .lang{padding:7px 9px}
+  .cv{display:none}
+  .mobile{border-top:1px solid #203852}
+  .mobile.open{display:block}
+  .mobile a{padding:12px 0;border-bottom:1px solid #203852}
   .hero,.hero-inner{min-height:700px}
   .hero-copy{width:100%;padding-top:70px}
   .stats{width:100%}
@@ -259,8 +268,13 @@ footer{background:var(--navy);color:#fff;padding:55px 0 0}
   .objectives{grid-template-columns:1fr}
 }
 @media(max-width:560px){
-  .section{padding:52px 0}
+  .section{padding:45px 0}
+  .container{width:calc(100% - 24px)}
+  .brand-name{font-size:14px}
+  .logo{width:36px;height:36px}
   .brand-sub{display:none}
+  .title{gap:8px;margin-bottom:22px}
+  .title h2{font-size:20px}
   .hero,.hero-inner{min-height:760px}
   .hero h1{font-size:35px}
   .lead{font-size:13px}
@@ -293,10 +307,16 @@ footer{background:var(--navy);color:#fff;padding:55px 0 0}
       <a href="#cev-tanger">Projet</a>
       <a href="#gallery">Galerie</a>
     </div>
+    <button class="menu" id="menu" aria-label="Ouvrir le menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
     <div class="actions">
       <button class="icon" id="theme" aria-label="Changer le thème"><i class="fa-solid fa-moon"></i></button>
       <button class="lang" id="language">EN</button>
     </div>
+  </div>
+  <div class="mobile" id="mobileMenu">
+    <a href="index.html">← Portfolio</a>
+    <a href="#cev-tanger">Projet</a>
+    <a href="#gallery">Galerie</a>
   </div>
 </nav>
 
@@ -509,6 +529,25 @@ footer{background:var(--navy);color:#fff;padding:55px 0 0}
 
 <script>
 const body=document.body;
+const menu=document.getElementById('menu');
+const mobileMenu=document.getElementById('mobileMenu');
+
+menu.onclick=()=>{
+  const open=mobileMenu.classList.toggle('open');
+  menu.setAttribute('aria-expanded',open?'true':'false');
+  menu.innerHTML=open
+    ? '<i class="fa-solid fa-xmark"></i>'
+    : '<i class="fa-solid fa-bars"></i>';
+};
+
+mobileMenu.querySelectorAll('a').forEach(link=>{
+  link.addEventListener('click',()=>{
+    mobileMenu.classList.remove('open');
+    menu.setAttribute('aria-expanded','false');
+    menu.innerHTML='<i class="fa-solid fa-bars"></i>';
+  });
+});
+
 const lang=document.getElementById('language');
 const theme=document.getElementById('theme');
 
