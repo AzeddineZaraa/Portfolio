@@ -63,7 +63,8 @@ nav{
 /* HERO */
 .hero{
   min-height:650px;color:#fff;background:
-  linear-gradient(90deg,rgba(6,26,51,.96) 0%,rgba(6,26,51,.88) 45%,rgba(6,26,51,.42) 100%);
+  linear-gradient(90deg,rgba(6,26,51,.96) 0%,rgba(6,26,51,.88) 45%,rgba(6,26,51,.42) 100%),
+  url('assets/images/hero-bg.png') center/cover no-repeat;
   position:relative;overflow:hidden
 }
 .hero:after{
@@ -120,7 +121,7 @@ nav{
 .soft i{color:var(--lime);width:18px}
 .tools{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .tool{border:1px solid var(--line);border-radius:9px;padding:11px;display:flex;align-items:center;gap:9px;background:var(--paper)}
-.badge{width:34px;height:34px;border-radius:8px;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:9px;font-weight:800}
+.badge{width:40px;height:40px;border-radius:8px;background:#fff;display:block;object-fit:contain;padding:3px;flex:none;border:1px solid var(--line)}
 .toolname{font-size:11.5px;font-weight:700}
 
 /* PROJECTS */
@@ -444,14 +445,14 @@ footer{background:var(--navy);color:#fff;padding:55px 0 0}
       <div>
         <h3 data-fr>Outils &amp; logiciels</h3><h3 data-en>Tools &amp; software</h3>
         <div class="tools">
-          <div class="tool"><div class="badge">CAD</div><div class="toolname">AutoCAD</div></div>
-          <div class="tool"><div class="badge">DLX</div><div class="toolname">DIALux evo</div></div>
-          <div class="tool"><div class="badge">ETP</div><div class="toolname">ETAP</div></div>
-          <div class="tool"><div class="badge">MAT</div><div class="toolname">MATLAB</div></div>
-          <div class="tool"><div class="badge">PVS</div><div class="toolname">PVsyst</div></div>
-          <div class="tool"><div class="badge">PY</div><div class="toolname">Python</div></div>
-          <div class="tool"><div class="badge">CBT</div><div class="toolname">Caneco BT</div></div>
-          <div class="tool"><div class="badge">XL</div><div class="toolname">Excel</div></div>
+          <div class="tool"><img class="badge" src="assets/images/autocad.png" alt="AutoCAD"><div class="toolname">AutoCAD</div></div>
+          <div class="tool"><img class="badge" src="assets/images/dialux.png" alt="DIALux evo"><div class="toolname">DIALux evo</div></div>
+          <div class="tool"><img class="badge" src="assets/images/etap.png" alt="ETAP"><div class="toolname">ETAP</div></div>
+          <div class="tool"><img class="badge" src="assets/images/matlab.png" alt="MATLAB"><div class="toolname">MATLAB</div></div>
+          <div class="tool"><img class="badge" src="assets/images/PVsyst.png" alt="PVsyst"><div class="toolname">PVsyst</div></div>
+          <div class="tool"><img class="badge" src="assets/images/python.png" alt="Python"><div class="toolname">Python</div></div>
+          <div class="tool"><img class="badge" src="assets/images/caneco%20bt.png" alt="Caneco BT"><div class="toolname">Caneco BT</div></div>
+          <div class="tool"><img class="badge" src="assets/images/excel.png" alt="Excel"><div class="toolname">Excel</div></div>
         </div>
       </div>
     </div>
