@@ -68,8 +68,48 @@ url("assets/images/hero-bg.png") center/cover no-repeat}
 footer{background:var(--navy);color:#fff;padding:52px 0 0}.contact-head{display:flex;gap:16px;align-items:center;padding-bottom:30px;border-bottom:1px solid #223751}.contact-icon{width:52px;height:52px;border-radius:12px;background:var(--navy2);display:grid;place-items:center;color:var(--lime);font-size:20px}.contact-head h2{font-size:21px;margin:0;color:#fff}.contact-head p{font-size:13px;color:#aab9c9;margin:5px 0 0}.contact-items{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:30px 0}.contact{display:flex;gap:10px}.contact i{color:var(--lime);margin-top:3px}.contact small{display:block;color:#8fa2b6;font-size:10px;font-weight:700}.contact a,.contact span{display:block;color:#fff;font-size:12px;margin-top:3px;word-break:break-word}.contact a:hover{color:var(--lime)}.bottom{border-top:1px solid #223751;padding:17px 0;display:flex;justify-content:space-between;flex-wrap:wrap;color:#8fa2b6;font-size:10.5px}.bottom-links{display:flex;gap:14px}.bottom a:hover{color:var(--lime)}
 
 @media(max-width:1000px){.links{gap:14px}.links a{font-size:11px}.about-grid{grid-template-columns:170px 1fr}.info-grid{grid-column:1/-1}.skills-grid{grid-template-columns:1fr 1fr}.skills-grid>div:last-child{grid-column:1/-1}}
-@media(max-width:800px){.container{width:calc(100% - 34px)}.links{display:none}.menu{display:block}.cv{display:none}.hero,.hero-inner{min-height:700px}.hero{background-position:62% center}.hero-copy{width:100%;padding-top:70px}.stats{width:100%}.projects,.exp-grid{grid-template-columns:1fr}.contact-items{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.section{padding:52px 0}.brand-sub{display:none}.hero,.hero-inner{min-height:760px}.hero h1{font-size:35px}.lead{font-size:13px}.stats{grid-template-columns:1fr}.stat{border-right:0;border-bottom:1px solid #7d99b433}.stat:last-child{border-bottom:0}.about-grid,.skills-grid{grid-template-columns:1fr}.skills-grid>div:last-child{grid-column:auto}.avatar{width:155px;height:155px}.info-grid,.contact-items{grid-template-columns:1fr}.bottom{flex-direction:column;gap:10px}}
+@media(max-width:800px){
+.container{width:calc(100% - 30px)}
+.navbar{height:68px;gap:10px}
+.links{display:none}
+.menu{display:block;flex-shrink:0;padding:8px;cursor:pointer}
+.actions{gap:6px}
+.icon{width:34px;height:34px}
+.lang{padding:7px 9px}
+.cv{display:none}
+.mobile{padding:10px 18px 15px}
+.mobile a{padding:12px 0}
+.hero,.hero-inner{min-height:700px}
+.hero{background-position:62% center}
+.hero-copy{width:100%;padding-top:65px;padding-bottom:155px}
+.stats{width:100%;bottom:0}
+.projects,.exp-grid{grid-template-columns:1fr}
+.contact-items{grid-template-columns:1fr 1fr}
+.about-grid{grid-template-columns:150px 1fr}
+}
+@media(max-width:560px){
+.section{padding:45px 0}
+.container{width:calc(100% - 24px)}
+.brand-name{font-size:14px}
+.brand-sub{display:none}
+.hero,.hero-inner{min-height:760px}
+.hero-copy{padding-top:55px;padding-bottom:260px}
+.hero h1{font-size:35px}
+.lead{font-size:13px;line-height:1.65}
+.buttons{gap:9px}
+.btn{padding:11px 14px}
+.stats{grid-template-columns:1fr}
+.stat{padding:13px 16px;border-right:0;border-bottom:1px solid #7d99b433}
+.stat:last-child{border-bottom:0}
+.about-grid,.skills-grid{grid-template-columns:1fr}
+.skills-grid>div:last-child{grid-column:auto}
+.avatar{width:155px;height:155px}
+.info-grid,.contact-items{grid-template-columns:1fr}
+.tools{grid-template-columns:1fr 1fr}
+.bottom{flex-direction:column;gap:10px}
+.title h2{font-size:20px}
+.cover{height:190px}
+}
 </style>
 </head>
 
@@ -85,7 +125,7 @@ footer{background:var(--navy);color:#fff;padding:52px 0 0}.contact-head{display:
 <a href="#experience"><span data-fr>Expérience</span><span data-en>Experience</span></a>
 <a href="#contact">Contact</a>
 </div>
-<div class="actions"><button class="icon" id="theme"><i class="fa-solid fa-moon"></i></button><button class="lang" id="language">EN</button><a class="cv" href="assets/docs/cv.pdf" target="_blank"><span data-fr>Télécharger CV</span><span data-en>Download CV</span><i class="fa-solid fa-download"></i></a><button class="menu" id="menub"><i class="fa-solid fa-bars"></i></button></div>
+<div class="actions"><button class="icon" id="theme"><i class="fa-solid fa-moon"></i></button><button class="lang" id="language">EN</button><a class="cv" href="assets/docs/cv.pdf" target="_blank"><span data-fr>Télécharger CV</span><span data-en>Download CV</span><i class="fa-solid fa-download"></i></a><button class="menu" id="menub" aria-label="Ouvrir le menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button></div>
 </div>
 <div class="mobile" id="mobile">
 <a href="#hero">Accueil</a><a href="#about">À propos</a><a href="#skills">Compétences</a><a href="#projects">Projets</a><a href="#experience">Expérience</a><a href="#contact">Contact</a><a href="assets/docs/cv.pdf" target="_blank">Télécharger CV</a>
@@ -269,8 +309,16 @@ document.addEventListener('keydown',e=>{
 });
 lang.onclick=()=>{const en=!body.classList.contains('en');body.classList.toggle('en',en);body.classList.toggle('fr',!en);document.documentElement.lang=en?'en':'fr';lang.textContent=en?'FR':'EN'};
 theme.onclick=()=>{body.classList.toggle('dark');theme.innerHTML=body.classList.contains('dark')?'<i class="fa-solid fa-sun"></i>':'<i class="fa-solid fa-moon"></i>'};
-menub.onclick=()=>menu.classList.toggle('open');
-document.querySelectorAll('.mobile a').forEach(a=>a.onclick=()=>menu.classList.remove('open'));
+menub.onclick=()=>{
+  const open=menu.classList.toggle('open');
+  menub.setAttribute('aria-expanded',open?'true':'false');
+  menub.innerHTML=open?'<i class="fa-solid fa-xmark"></i>':'<i class="fa-solid fa-bars"></i>';
+};
+document.querySelectorAll('.mobile a').forEach(a=>a.onclick=()=>{
+  menu.classList.remove('open');
+  menub.setAttribute('aria-expanded','false');
+  menub.innerHTML='<i class="fa-solid fa-bars"></i>';
+});
 </script>
 </body>
 </html>
