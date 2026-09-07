@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IEEE 9-Bus Power System Modelling in ETAP 24 - projet de modélisation et Load Flow.">
+  <title>IEEE 9-Bus Power System | ETAP 24</title>
+
+  <style>
+    :root {
+      --navy: #0d2947;
+      --blue: #1677e8;
+      --blue-light: #eaf4ff;
+      --text: #17233b;
+      --muted: #68758b;
+      --border: #e4eaf2;
+      --bg: #f6f9fc;
+      --white: #ffffff;
+      --shadow: 0 10px 30px rgba(19, 48, 82, .08);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .navbar {
+      height: 68px;
+      background: var(--navy);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      font-size: 31px;
+      font-weight: 800;
+      letter-spacing: -2px;
+    }
+
+    .brand-text strong { display: block; font-size: 16px; }
+    .brand-text span { display: block; font-size: 12px; opacity: .75; }
+
+    .nav-links {
+      display: flex;
+      gap: 34px;
+      font-size: 14px;
+    }
+
+    .nav-links a {
+      opacity: .9;
+      padding: 23px 0 18px;
+      border-bottom: 3px solid transparent;
+    }
+
+    .nav-links a.active {
+      color: #6db5ff;
+      border-bottom-color: #6db5ff;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 34px 5% 30px;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.98) 0%, rgba(255,255,255,.92) 58%, rgba(221,237,252,.55) 100%);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -5%;
+      top: 0;
+      width: 48%;
+      height: 100%;
+      background:
+        linear-gradient(90deg, transparent, rgba(30,105,180,.12)),
+        url("assets/ieee-9-bus-etap.png") center/cover no-repeat;
+      opacity: .18;
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 1050px; }
+
+    .back {
+      display: inline-block;
+      color: #4c6c95;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+
+    h1 {
+      font-size: clamp(32px, 4vw, 46px);
+      line-height: 1.12;
+      letter-spacing: -1.3px;
+      margin-bottom: 9px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 19px;
+      max-width: 850px;
+      margin-bottom: 18px;
+    }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 9px; }
+
+    .tag {
+      background: #e6f1ff;
+      color: #1262bc;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .container {
+      width: min(1320px, 90%);
+      margin: 0 auto;
+      padding: 22px 0 48px;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: .9fr 1.25fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 25px;
+    }
+
+    .card h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    .icon {
+      width: 31px;
+      height: 31px;
+      border-radius: 9px;
+      background: var(--blue-light);
+      color: var(--blue);
+      display: grid;
+      place-items: center;
+      font-size: 17px;
+    }
+
+    .section-line {
+      height: 3px;
+      width: 45px;
+      background: var(--blue);
+      border-radius: 10px;
+      margin: -8px 0 18px;
+    }
+
+    .card p { color: #526078; font-size: 15px; }
+
+    .objectives {
+      margin-top: 22px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .check-list {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .check-list li {
+      display: flex;
+      gap: 10px;
+      color: #45536b;
+      font-size: 14px;
+    }
+
+    .check {
+      flex: 0 0 20px;
+      height: 20px;
+      width: 20px;
+      border-radius: 50%;
+      background: #ddecff;
+      color: var(--blue);
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .diagram-card { padding: 18px; }
+
+    .diagram {
+      width: 100%;
+      display: block;
+      border: 1px solid #dce5ef;
+      border-radius: 12px;
+      background: white;
+    }
+
+    .caption {
+      text-align: center;
+      color: #8490a2;
+      font-size: 13px;
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .metric {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin: 13px 0;
+    }
+
+    .metric-icon {
+      width: 35px;
+      height: 35px;
+      flex: 0 0 35px;
+      border-radius: 50%;
+      background: #edf5ff;
+      color: var(--blue);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 14px;
+      color: #34425a;
+    }
+
+    .metric span {
+      display: block;
+      color: #68758b;
+      font-size: 13px;
+    }
+
+    .tool {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 15px 0;
+    }
+
+    .tool-badge {
+      min-width: 62px;
+      padding: 8px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      text-align: center;
+      font-weight: 800;
+      color: #e5322f;
+      font-size: 18px;
+    }
+
+    .tool strong { display: block; font-size: 14px; }
+    .tool span { color: var(--muted); font-size: 12px; }
+
+    .analysis-list {
+      list-style: none;
+      display: grid;
+      gap: 11px;
+      margin-top: 8px;
+      color: #556278;
+      font-size: 14px;
+    }
+
+    .analysis-list li::before {
+      content: "";
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin-right: 9px;
+      border-radius: 50%;
+      background: var(--blue);
+    }
+
+    .actions {
+      margin-top: 22px;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 18px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 650;
+      border: 1px solid var(--border);
+      background: white;
+    }
+
+    .btn-primary {
+      background: var(--navy);
+      color: white;
+      border-color: var(--navy);
+    }
+
+    footer {
+      text-align: center;
+      color: #8792a4;
+      font-size: 12px;
+      padding: 20px;
+    }
+
+    @media (max-width: 1050px) {
+      .main-grid { grid-template-columns: 1fr; }
+      .info-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 650px) {
+      .navbar { height: auto; padding: 14px 5%; gap: 15px; align-items: flex-start; }
+      .nav-links { gap: 12px; flex-wrap: wrap; justify-content: flex-end; }
+      .nav-links a { padding: 5px 0; border-bottom: 0; }
+      .nav-links a.active { border-bottom: 0; }
+      .hero { padding-top: 25px; }
+      .subtitle { font-size: 16px; }
+      .info-grid { grid-template-columns: 1fr; }
+      .card { padding: 19px; }
+      .actions { flex-direction: column; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="navbar">
+    <a class="brand" href="../index.html" aria-label="Retour au portfolio">
+      <div class="brand-logo">AZ</div>
+      <div class="brand-text">
+        <strong>Azeddine Zaraa</strong>
+        <span>Electrical Engineer</span>
+      </div>
+    </a>
+
+    <nav class="nav-links" aria-label="Navigation principale">
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+      <a href="../projects.html" class="active">Projects</a>
+      <a href="../skills.html">Skills</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <a class="back" href="../projects.html">← Back to Projects</a>
+      <h1>IEEE 9-Bus Power System Modelling in ETAP</h1>
+      <p class="subtitle">
+        Modélisation, analyse et étude de l'écoulement de puissance du réseau
+        IEEE 9-Bus sous ETAP 24.
+      </p>
+
+      <div class="tags">
+        <span class="tag">Power Systems</span>
+        <span class="tag">ETAP 24</span>
+        <span class="tag">Load Flow</span>
+        <span class="tag">IEEE 9-Bus</span>
+        <span class="tag">Simulation</span>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+
+    <div class="main-grid">
+
+      <article class="card">
+        <h2><span class="icon">▣</span> Overview</h2>
+        <div class="section-line"></div>
+
+        <p>
+          Ce projet consiste à modéliser le réseau standard IEEE 9-Bus dans
+          ETAP 24, à effectuer une étude d'écoulement de puissance (Load Flow)
+          et à analyser les résultats en termes de tensions, puissances et
+          pertes de lignes.
+        </p>
+
+        <p style="margin-top:12px;">
+          Le modèle constitue une base de simulation pour des études plus
+          avancées telles que l'analyse de stabilité, l'étude des défauts et
+          l'intégration des énergies renouvelables.
+        </p>
+
+        <div class="objectives">
+          <h2><span class="icon">◎</span> Objectifs</h2>
+          <ul class="check-list">
+            <li><span class="check">✓</span>Modéliser le réseau IEEE 9-Bus sous ETAP 24</li>
+            <li><span class="check">✓</span>Réaliser l'étude d'écoulement de puissance (Load Flow)</li>
+            <li><span class="check">✓</span>Vérifier et analyser les tensions, puissances et pertes</li>
+            <li><span class="check">✓</span>Créer une base de simulation pour des études avancées</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card diagram-card">
+        <h2><span class="icon">⌘</span> Schéma unifilaire du réseau IEEE 9-Bus (ETAP 24)</h2>
+        <img
+          class="diagram"
+          src="assets/ieee-9-bus-etap.png"
+          alt="Présentation du projet IEEE 9-Bus modélisé dans ETAP 24"
+        >
+        <p class="caption">
+          Modèle IEEE 9-Bus dans ETAP 24 — Résultats de l'écoulement de puissance
+        </p>
+      </article>
+
+    </div>
+
+    <section class="info-grid">
+
+      <article class="card">
+        <h2><span class="icon">∿</span> Résultats principaux</h2>
+
+        <div class="metric">
+          <div class="metric-icon">V</div>
+          <div><strong>Tensions des bus</strong><span>≈ 0,99 – 1,04 p.u.</span></div>
+        </div>
+
+        <div class="metric">
+          <div class="metric-icon">P</div>
+          <div><strong>Puissances générées</strong><span>72 MW, 163 MW, 85 MW</span></div>
+        </div>
+
+        <div class="metric">
+          <div class="metric-icon">S</div>
+          <div><strong>Charges</strong><span>125+j50, 90+j30, 100+j35 MVA</span></div>
+        </div>
+
+        <div class="metric">
+          <div class="metric-icon">L</div>
+          <div><strong>Pertes de lignes</strong><span>Analysées à partir du Load Flow</span></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2><span class="icon">⚙</span> Outils &amp; Logiciels</h2>
+
+        <div class="tool">
+          <div class="tool-badge">etap</div>
+          <div><strong>ETAP 24</strong><span>Power System Analysis and Design</span></div>
+        </div>
+
+        <div class="tool">
+          <div class="tool-badge" style="color:#1468b8;">IEEE</div>
+          <div><strong>IEEE 9-Bus</strong><span>Benchmark power system</span></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2><span class="icon">▥</span> Types d'analyses</h2>
+
+        <ul class="analysis-list">
+          <li>Load Flow (Écoulement de puissance)</li>
+          <li>Analyse des tensions</li>
+          <li>Pertes actives et réactives</li>
+          <li>Répartition des puissances</li>
+          <li>Base pour études de stabilité et défauts</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2><span class="icon">♧</span> Perspectives</h2>
+
+        <p>Ce modèle peut être étendu vers :</p>
+
+        <ul class="check-list">
+          <li><span class="check">✓</span>Analyse de stabilité transitoire</li>
+          <li><span class="check">✓</span>Étude des défauts (Short-Circuit)</li>
+          <li><span class="check">✓</span>Intégration des énergies renouvelables</li>
+          <li><span class="check">✓</span>Application de techniques IA/ML pour la surveillance et la détection de défauts</li>
+        </ul>
+      </article>
+
+    </section>
+
+    <div class="actions">
+      <a class="btn btn-primary" href="#" onclick="alert('Ajoutez ici le lien vers votre dépôt GitHub ou vos fichiers du projet.'); return false;">
+        ↗ &nbsp; Voir le code / Fichiers du projet
+      </a>
+      <a class="btn" href="../projects.html">← &nbsp; Retour aux projets</a>
+    </div>
+
+  </main>
+
+  <footer>
+    © 2026 Azeddine Zaraa — Electrical Engineering Portfolio
+  </footer>
+
+</body>
+</html>
