@@ -13,7 +13,7 @@
 body.dark{--ink:#eef4fa;--muted:#9caebe;--paper:#0b1521;--paper2:#101d2b;--line:#243448;--shadow:0 12px 32px rgba(0,0,0,.2)}
 *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:80px}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,Arial,sans-serif;transition:.2s}h1,h2,h3{font-family:Poppins,Arial,sans-serif;line-height:1.2}a{text-decoration:none;color:inherit}.container{width:min(1180px,calc(100% - 48px));margin:auto}
-[data-en]{display:none}body.en [data-fr]{display:none}body.en [data-en]{display:initial}
+[data-en]{display:none!important}body.en [data-fr]{display:none!important}body.en [data-en]{display:initial!important}
 
 /* NAVIGATION — same visual language as index.html */
 nav{position:sticky;top:0;z-index:100;background:rgba(18,59,37,.97);backdrop-filter:blur(10px);border-bottom:1px solid #28583a}
@@ -63,14 +63,14 @@ footer{background:var(--navy);color:#91ae99;padding:28px 0;text-align:center;fon
 <a href="index.html#contact">Contact</a>
 </div>
 <div class="actions">
-<button class="icon" id="theme" aria-label="Changer le thème"><i class="fa-solid fa-moon"></i></button>
+<button class="icon" id="theme" aria-label="Changer le thème" title="Changer le thème"><i class="fa-solid fa-moon"></i></button>
 <button class="lang" id="language">EN</button>
 <a class="cv" href="assets/docs/cv.pdf" target="_blank"><span data-fr>Télécharger CV</span><span data-en>Download CV</span><i class="fa-solid fa-download"></i></a>
 <button class="menu" id="menub" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
 </div>
 </div>
 <div class="mobile" id="mobile">
-<a href="index.html#hero">Accueil</a><a href="index.html#about">À propos</a><a href="index.html#skills">Compétences</a><a href="index.html#projects">Projets</a><a href="index.html#experience">Expérience</a><a href="index.html#contact">Contact</a><a href="assets/docs/cv.pdf" target="_blank">Télécharger CV</a>
+<a href="index.html#hero"><span data-fr>Accueil</span><span data-en>Home</span></a><a href="index.html#about"><span data-fr>À propos</span><span data-en>About</span></a><a href="index.html#skills"><span data-fr>Compétences</span><span data-en>Skills</span></a><a href="index.html#projects"><span data-fr>Projets</span><span data-en>Projects</span></a><a href="index.html#experience"><span data-fr>Expérience</span><span data-en>Experience</span></a><a href="index.html#contact">Contact</a><a href="assets/docs/cv.pdf" target="_blank"><span data-fr>Télécharger CV</span><span data-en>Download CV</span></a>
 </div>
 </nav>
 
@@ -108,7 +108,7 @@ footer{background:var(--navy);color:#91ae99;padding:28px 0;text-align:center;fon
 <article class="card diagram-card">
 <div class="section-label">ETAP MODEL</div>
 <div class="title"><i class="fa-solid fa-diagram-project"></i><h2 data-fr>Modèle du réseau</h2><h2 data-en>Network model</h2></div>
-<img class="diagram" src="assets/ieee-9-bus-etap.png" alt="Réseau IEEE 9-Bus modélisé dans ETAP 24">
+<img class="diagram" src="assets/ieee-9-bus-etap.png" alt="IEEE 9-Bus network modelled in ETAP 24">
 <p class="caption" data-fr>Réseau IEEE 9-Bus et résultats du Load Flow sous ETAP 24.</p>
 <p class="caption" data-en>IEEE 9-Bus network and load-flow results in ETAP 24.</p><div class="simulation-video"><video autoplay muted loop playsinline preload="metadata"><source src="assets/download.mp4" type="video/mp4">Your browser does not support the video tag.</video></div><p class="caption" data-fr>Animation de la simulation du flux de puissance dans ETAP 24.</p><p class="caption" data-en>ETAP 24 power-flow simulation animation.</p>
 </article>
@@ -118,9 +118,9 @@ footer{background:var(--navy);color:#91ae99;padding:28px 0;text-align:center;fon
 <section class="section alt"><div class="container">
 <div class="title"><i class="fa-solid fa-chart-line"></i><h2 data-fr>Résultats principaux</h2><h2 data-en>Key results</h2></div>
 <div class="results">
-<div class="metric"><div class="metric-icon">V</div><strong>Tensions des bus</strong><span>≈ 0,99 – 1,04 p.u.</span></div>
-<div class="metric"><div class="metric-icon">P</div><strong>Génération</strong><span>72 MW • 163 MW • 85 MW</span></div>
-<div class="metric"><div class="metric-icon">S</div><strong>Charges</strong><span>125+j50 • 90+j30 • 100+j35 MVA</span></div>
+<div class="metric"><div class="metric-icon">V</div><strong data-fr>Tensions des bus</strong><strong data-en>Bus voltages</strong><span>≈ 0,99 – 1,04 p.u.</span></div>
+<div class="metric"><div class="metric-icon">P</div><strong data-fr>Génération</strong><strong data-en>Generation</strong><span>72 MW • 163 MW • 85 MW</span></div>
+<div class="metric"><div class="metric-icon">S</div><strong data-fr>Charges</strong><strong data-en>Loads</strong><span>125+j50 • 90+j30 • 100+j35 MVA</span></div>
 <div class="metric"><div class="metric-icon">L</div><strong data-fr>Pertes de lignes</strong><strong data-en>Line losses</strong><span data-fr>Analysées avec le Load Flow</span><span data-en>Analysed through load flow</span></div>
 </div>
 </div></section>
@@ -135,11 +135,11 @@ footer{background:var(--navy);color:#91ae99;padding:28px 0;text-align:center;fon
 <article class="card">
 <div class="title"><i class="fa-solid fa-wave-square"></i><h2 data-fr>Types d'analyses</h2><h2 data-en>Analysis types</h2></div>
 <ul class="analysis-list">
-<li><i class="fa-solid fa-circle"></i>Load Flow — Écoulement de puissance</li>
-<li><i class="fa-solid fa-circle"></i>Analyse des tensions aux bus</li>
-<li><i class="fa-solid fa-circle"></i>Pertes actives et réactives des lignes</li>
-<li><i class="fa-solid fa-circle"></i>Répartition des puissances</li>
-<li><i class="fa-solid fa-circle"></i>Base pour stabilité et études de défauts</li>
+<li><i class="fa-solid fa-circle"></i><span data-fr>Load Flow — Écoulement de puissance</span><span data-en>Load Flow — Power flow analysis</span></li>
+<li><i class="fa-solid fa-circle"></i><span data-fr>Analyse des tensions aux bus</span><span data-en>Bus voltage analysis</span></li>
+<li><i class="fa-solid fa-circle"></i><span data-fr>Pertes actives et réactives des lignes</span><span data-en>Active and reactive line losses</span></li>
+<li><i class="fa-solid fa-circle"></i><span data-fr>Répartition des puissances</span><span data-en>Power flow distribution</span></li>
+<li><i class="fa-solid fa-circle"></i><span data-fr>Base pour stabilité et études de défauts</span><span data-en>Basis for stability and fault studies</span></li>
 </ul>
 </article>
 </div>
