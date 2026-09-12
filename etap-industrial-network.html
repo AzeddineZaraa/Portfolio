@@ -43,6 +43,27 @@ nav{position:sticky;top:0;z-index:100;background:rgba(18,59,37,.97);backdrop-fil
 @media(max-width:800px){.hero-cover{padding-top:15px}.hero-toolbar{left:12px;right:12px;top:28px}.hero-toolbar .back{font-size:11px;padding:8px 10px}.hero-badge{font-size:9px;padding:8px 9px}.project-head{padding:30px 0 38px}.project-head-grid{grid-template-columns:1fr;gap:22px}.hero-image{border-radius:11px}}
 @media(max-width:560px){.hero-toolbar{top:23px}.hero-toolbar .back span{display:none}.hero-badge{font-size:8px}.project-head h1{font-size:31px}.project-lead{font-size:13px}}
 
+
+/* --- Study navigation and sections --- */
+.study-nav{position:sticky;top:78px;z-index:50;background:var(--paper);border-bottom:1px solid var(--line);box-shadow:0 5px 18px rgba(6,26,51,.05)}
+.study-nav-inner{display:flex;gap:8px;overflow:auto;padding:10px 0}
+.study-nav a{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;padding:10px 14px;border:1px solid var(--line);border-radius:8px;font-size:11px;font-weight:800;color:var(--muted);background:var(--paper2)}
+.study-nav a:hover{border-color:var(--lime);color:var(--lime2)}
+.study-section{scroll-margin-top:135px}
+.study-section .section-kicker{display:inline-flex;align-items:center;gap:7px;padding:6px 9px;border-radius:6px;background:rgba(121,201,67,.12);color:var(--lime2);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.study-section h2{font-size:28px;margin:0 0 10px}
+.study-intro{max-width:820px;color:var(--muted);font-size:13px;line-height:1.8;margin:0 0 26px}
+.study-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:20px;align-items:start}
+.study-points{display:grid;gap:10px;margin-top:15px}
+.study-point{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:9px;background:var(--paper2)}
+.study-point i{color:var(--lime);margin-top:2px}
+.study-point strong{display:block;font-size:11px;margin-bottom:3px}.study-point span{font-size:11px;line-height:1.55;color:var(--muted)}
+.study-gallery{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.study-gallery figure{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:9px;box-shadow:var(--shadow)}
+.study-gallery img{width:100%;display:block;border-radius:8px;cursor:zoom-in;background:#fff}.study-gallery figcaption{font-size:10.5px;color:var(--muted);text-align:center;padding:8px 3px 2px}
+.study-banner{margin-top:24px;padding:18px 20px;border-left:3px solid var(--lime);background:rgba(121,201,67,.08);border-radius:0 10px 10px 0}.study-banner strong{display:block;font-size:12px;margin-bottom:5px}.study-banner p{margin:0;color:var(--muted);font-size:11px;line-height:1.6}
+@media(max-width:800px){.study-nav{top:68px}.study-grid{grid-template-columns:1fr}.study-gallery{grid-template-columns:1fr}.study-section h2{font-size:24px}}
+
 </style>
 </head>
 <body>
@@ -77,11 +98,61 @@ nav{position:sticky;top:0;z-index:100;background:rgba(18,59,37,.97);backdrop-fil
     </div>
   </div>
 </section>
-<main>
-<section class="section"><div class="container"><div class="grid"><article class="card"><div class="label">PROJECT OVERVIEW</div><div class="title"><i class="fa-solid fa-circle-info"></i><h2 data-fr>Présentation</h2><h2 data-en>Overview</h2></div><p data-fr>Cette étude porte sur un réseau électrique industriel comportant une source amont, des transformateurs, des jeux de barres, des câbles, des charges industrielles et des équipements auxiliaires. Le modèle a été construit dans ETAP afin d'étudier le comportement du réseau en régime permanent.</p><p data-en>This study covers an industrial electrical network including an upstream source, transformers, buses, cables, industrial loads and auxiliary equipment. The model was built in ETAP to evaluate steady-state network behaviour.</p><ul class="list"><li><span class="check">✓</span><span data-fr>Construction et organisation du réseau électrique dans ETAP.</span><span data-en>Build and organise the electrical network in ETAP.</span></li><li><span class="check">✓</span><span data-fr>Étude Load Flow et visualisation des grandeurs électriques.</span><span data-en>Perform load-flow analysis and visualise electrical quantities.</span></li><li><span class="check">✓</span><span data-fr>Analyse des niveaux de tension, courants et facteurs de puissance.</span><span data-en>Analyse voltage levels, currents and power factors.</span></li><li><span class="check">✓</span><span data-fr>Identification des zones présentant des chutes de tension et des facteurs de puissance faibles.</span><span data-en>Identify areas with voltage drops and low power factors.</span></li></ul></article><article class="card"><div class="label">ETAP MODEL</div><div class="title"><i class="fa-solid fa-diagram-project"></i><h2 data-fr>Architecture du réseau</h2><h2 data-en>Network architecture</h2></div><img class="diagram" src="assets/img1.png" alt="Industrial electrical network model in ETAP"><p class="caption" data-fr>Modèle unifilaire de l'installation électrique industrielle sous ETAP.</p><p class="caption" data-en>Single-line model of the industrial electrical installation in ETAP.</p></article></div></div></section>
-<section class="section alt"><div class="container"><div class="title"><i class="fa-solid fa-chart-line"></i><h2 data-fr>Résultats de l'étude Load Flow</h2><h2 data-en>Load Flow study results</h2></div><div class="metrics"><div class="metric"><i class="fa-solid fa-bolt"></i><strong data-fr>Tension des bus</strong><strong data-en>Bus voltage</strong><span data-fr>Suivi des niveaux de tension sur les différents jeux de barres.</span><span data-en>Voltage levels monitored across the different buses.</span></div><div class="metric"><i class="fa-solid fa-gauge-high"></i><strong data-fr>Courants</strong><strong data-en>Currents</strong><span data-fr>Courants affichés sur les départs et les branches du réseau.</span><span data-en>Currents displayed on feeders and network branches.</span></div><div class="metric"><i class="fa-solid fa-percent"></i><strong data-fr>Facteur de puissance</strong><strong data-en>Power factor</strong><span data-fr>Analyse du PF des charges et des départs industriels.</span><span data-en>Power-factor analysis of industrial loads and feeders.</span></div><div class="metric"><i class="fa-solid fa-triangle-exclamation"></i><strong data-fr>Points à surveiller</strong><strong data-en>Points to monitor</strong><span data-fr>Repérage des départs présentant des valeurs de PF ou de tension moins favorables.</span><span data-en>Identify feeders with less favourable PF or voltage values.</span></div></div><div class="note"><p><strong data-fr>Lecture des résultats :</strong><strong data-en>Result interpretation:</strong> <span data-fr>les captures montrent notamment des tensions de bus autour de 96–98 % dans plusieurs zones et des facteurs de puissance variables selon les charges. Ces valeurs doivent être interprétées avec les critères de conception et les limites admissibles de l'installation.</span><span data-en>the screenshots show bus voltages around 96–98% in several areas and varying power factors depending on the loads. These values should be assessed against the installation design criteria and permissible limits.</span></p></div></div></section>
-<section class="section"><div class="container"><div class="title"><i class="fa-solid fa-images"></i><h2 data-fr>Captures de simulation</h2><h2 data-en>Simulation screenshots</h2></div><div class="gallery"><figure><img src="assets/img2.png" alt="ETAP load flow results - upstream network" onclick="openBox(this.src)"><figcaption data-fr>Résultats Load Flow — source, transformateurs et jeu de barres principal.</figcaption><figcaption data-en>Load-flow results — source, transformers and main bus.</figcaption></figure><figure><img src="assets/img3.png" alt="ETAP load flow industrial feeders" onclick="openBox(this.src)"><figcaption data-fr>Résultats Load Flow — départs et charges industrielles.</figcaption><figcaption data-en>Load-flow results — industrial feeders and loads.</figcaption></figure><figure><img src="assets/img4.png" alt="ETAP load flow downstream network" onclick="openBox(this.src)"><figcaption data-fr>Résultats Load Flow — réseau basse tension et charges finales.</figcaption><figcaption data-en>Load-flow results — low-voltage network and final loads.</figcaption></figure><figure><img src="assets/img1.png" alt="ETAP industrial network single line diagram" onclick="openBox(this.src)"><figcaption data-fr>Vue globale du modèle unifilaire ETAP.</figcaption><figcaption data-en>Overall view of the ETAP single-line model.</figcaption></figure></div><div class="actions-row"><a class="btn primary" href="index.html#projects"><i class="fa-solid fa-arrow-left"></i><span data-fr>Retour aux projets</span><span data-en>Back to projects</span></a></div></div></section>
-</main><footer><div class="container">© 2026 Azeddine Zaraa — Industrial Electrical Network | ETAP</div></footer>
+
+<nav class="study-nav"><div class="container study-nav-inner">
+  <a href="#power-flow"><i class="fa-solid fa-wave-square"></i><span data-fr>Power Flow Study</span><span data-en>Power Flow Study</span></a>
+  <a href="#protection"><i class="fa-solid fa-shield-halved"></i><span data-fr>Protection Coordination</span><span data-en>Protection Coordination</span></a>
+</div></nav>
+<section class="section study-section" id="power-flow">
+  <div class="container">
+    <div class="section-kicker"><i class="fa-solid fa-wave-square"></i> POWER SYSTEM ANALYSIS</div>
+    <h2><span data-fr>01 — Étude Power Flow</span><span data-en>01 — Power Flow Study</span></h2>
+    <p class="study-intro" data-fr>Analyse de l'écoulement de puissance du réseau industriel sous ETAP afin d'évaluer les niveaux de tension, les courants, les flux de puissance, le chargement des équipements et les facteurs de puissance.</p>
+    <p class="study-intro" data-en>Load-flow analysis of the industrial network in ETAP to evaluate voltage levels, currents, power flows, equipment loading and power factors.</p>
+    <div class="study-grid">
+      <div class="card">
+        <div class="label" data-fr>Objectifs de l'étude</div><div class="label" data-en>Study objectives</div>
+        <div class="study-points">
+          <div class="study-point"><i class="fa-solid fa-check"></i><div><strong data-fr>Validation du réseau</strong><strong data-en>Network validation</strong><span data-fr>Vérifier le comportement électrique du réseau en régime permanent.</span><span data-en>Verify the electrical behaviour of the network in steady state.</span></div></div>
+          <div class="study-point"><i class="fa-solid fa-check"></i><div><strong data-fr>Niveaux de tension</strong><strong data-en>Voltage levels</strong><span data-fr>Identifier les bus présentant des écarts de tension et analyser leur origine.</span><span data-en>Identify buses with voltage deviations and analyse their causes.</span></div></div>
+          <div class="study-point"><i class="fa-solid fa-check"></i><div><strong data-fr>Chargement</strong><strong data-en>Equipment loading</strong><span data-fr>Évaluer les courants et le chargement des transformateurs et départs.</span><span data-en>Evaluate currents and loading of transformers and feeders.</span></div></div>
+          <div class="study-point"><i class="fa-solid fa-check"></i><div><strong data-fr>Facteur de puissance</strong><strong data-en>Power factor</strong><span data-fr>Observer les facteurs de puissance et l'impact de la compensation réactive.</span><span data-en>Assess power factors and the effect of reactive power compensation.</span></div></div>
+        </div>
+      </div>
+      <div class="study-gallery">
+        <figure><img src="assets/img1.png" alt="ETAP industrial network power flow model"><figcaption data-fr>Modèle du réseau industriel sous ETAP</figcaption><figcaption data-en>Industrial network model in ETAP</figcaption></figure>
+        <figure><img src="assets/img2.png" alt="ETAP load flow results"><figcaption data-fr>Résultats de l'étude Power Flow</figcaption><figcaption data-en>Power Flow study results</figcaption></figure>
+      </div>
+    </div>
+    <div class="study-banner"><strong data-fr>Résultat recherché</strong><strong data-en>Expected outcome</strong><p data-fr>Obtenir une vision claire de la répartition des puissances et de l'état électrique du réseau avant de passer à l'étude de protection.</p><p data-en>Obtain a clear view of power distribution and network electrical conditions before moving to protection analysis.</p></div>
+  </div>
+</section>
+<section class="section alt study-section" id="protection">
+  <div class="container">
+    <div class="section-kicker"><i class="fa-solid fa-shield-halved"></i> PROTECTION &amp; SELECTIVITY</div>
+    <h2><span data-fr>02 — Coordination des protections</span><span data-en>02 — Protection Coordination</span></h2>
+    <p class="study-intro" data-fr>Étude de la coordination des dispositifs de protection afin d'assurer la sélectivité du réseau, de limiter les déclenchements intempestifs et de protéger les équipements contre les défauts et surintensités.</p>
+    <p class="study-intro" data-en>Protection coordination study aimed at achieving network selectivity, reducing nuisance tripping and protecting equipment against faults and overcurrents.</p>
+    <div class="study-grid">
+      <div class="card">
+        <div class="label" data-fr>Approche</div><div class="label" data-en>Approach</div>
+        <div class="study-points">
+          <div class="study-point"><i class="fa-solid fa-shield-halved"></i><div><strong data-fr>Dispositifs de protection</strong><strong data-en>Protection devices</strong><span data-fr>Prise en compte des protections associées aux départs, transformateurs et charges.</span><span data-en>Consider protection devices associated with feeders, transformers and loads.</span></div></div>
+          <div class="study-point"><i class="fa-solid fa-chart-line"></i><div><strong data-fr>Sélectivité</strong><strong data-en>Selectivity</strong><span data-fr>Vérifier que le dispositif le plus proche du défaut intervient en priorité.</span><span data-en>Verify that the protection closest to the fault operates first.</span></div></div>
+          <div class="study-point"><i class="fa-solid fa-bolt"></i><div><strong data-fr>Courants de défaut</strong><strong data-en>Fault currents</strong><span data-fr>Utiliser les niveaux de court-circuit comme base pour le réglage des protections.</span><span data-en>Use short-circuit levels as a basis for protection settings.</span></div></div>
+          <div class="study-point"><i class="fa-solid fa-sliders"></i><div><strong data-fr>Réglages</strong><strong data-en>Settings</strong><span data-fr>Comparer les seuils et temporisations pour obtenir une coordination cohérente.</span><span data-en>Compare pickup thresholds and time delays for consistent coordination.</span></div></div>
+        </div>
+      </div>
+      <div class="study-gallery">
+        <figure><img src="assets/img3.png" alt="ETAP protection coordination study"><figcaption data-fr>Configuration des protections sous ETAP</figcaption><figcaption data-en>Protection configuration in ETAP</figcaption></figure>
+        <figure><img src="assets/img4.png" alt="ETAP protection results"><figcaption data-fr>Analyse et vérification de la coordination</figcaption><figcaption data-en>Coordination analysis and verification</figcaption></figure>
+      </div>
+    </div>
+    <div class="study-banner"><strong data-fr>Objectif final</strong><strong data-en>Final objective</strong><p data-fr>Construire une protection fiable et sélective du réseau, tout en conservant la continuité de service autant que possible.</p><p data-en>Build a reliable and selective protection scheme while preserving service continuity as much as possible.</p></div>
+  </div>
+</section>
+
+<footer><div class="container">© 2026 Azeddine Zaraa — Industrial Electrical Network | ETAP</div></footer>
 <div class="lightbox" id="lightbox" onclick="closeBox(event)"><button class="close" aria-label="Close">×</button><img id="lightboxImg" alt="Expanded ETAP screenshot"></div>
 <script>
 const body=document.body,lang=document.getElementById('language'),theme=document.getElementById('theme'),menu=document.getElementById('menub'),mobile=document.getElementById('mobile');
