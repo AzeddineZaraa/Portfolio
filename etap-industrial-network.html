@@ -62,6 +62,10 @@ nav{position:sticky;top:0;z-index:100;background:rgba(18,59,37,.97);backdrop-fil
 .study-gallery figure{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:9px;box-shadow:var(--shadow)}
 .study-gallery img{width:100%;display:block;border-radius:8px;cursor:zoom-in;background:#fff}.study-gallery figcaption{font-size:10.5px;color:var(--muted);text-align:center;padding:8px 3px 2px}
 .study-banner{margin-top:24px;padding:18px 20px;border-left:3px solid var(--lime);background:rgba(121,201,67,.08);border-radius:0 10px 10px 0}.study-banner strong{display:block;font-size:12px;margin-bottom:5px}.study-banner p{margin:0;color:var(--muted);font-size:11px;line-height:1.6}
+.study-video{margin-top:24px;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:9px;box-shadow:var(--shadow)}
+.study-video-media{width:100%;display:block;border-radius:8px;background:#061a0f;object-fit:contain;pointer-events:none}
+.study-video-caption{font-size:10.5px;color:var(--muted);text-align:center;padding:8px 3px 2px}
+
 @media(max-width:800px){.study-nav{top:68px}.study-grid{grid-template-columns:1fr}.study-gallery{grid-template-columns:1fr}.study-section h2{font-size:24px}}
 
 </style>
@@ -122,6 +126,17 @@ nav{position:sticky;top:0;z-index:100;background:rgba(18,59,37,.97);backdrop-fil
       <div class="study-gallery">
         <figure><img src="assets/img1.png" alt="ETAP industrial network power flow model"><figcaption data-fr>Modèle du réseau industriel sous ETAP</figcaption><figcaption data-en>Industrial network model in ETAP</figcaption></figure>
         <figure><img src="assets/img2.png" alt="ETAP load flow results"><figcaption data-fr>Résultats de l'étude Power Flow</figcaption><figcaption data-en>Power Flow study results</figcaption></figure>
+        <figure><img src="assets/img3.png" alt="ETAP industrial network Power Flow result 3"><figcaption data-fr>Résultat Power Flow — vue complémentaire</figcaption><figcaption data-en>Power Flow result — additional view</figcaption></figure>
+        <figure><img src="assets/img4.png" alt="ETAP industrial network Power Flow result 4"><figcaption data-fr>Résultat Power Flow — vue complémentaire</figcaption><figcaption data-en>Power Flow result — additional view</figcaption></figure>
+      </div>
+      <div class="study-video">
+        <video class="study-video-media" autoplay muted loop playsinline preload="auto" poster="assets/page.png" aria-label="CEV Power Flow animation">
+          <source src="assets/CEV-flow.mp4" type="video/mp4">
+        </video>
+        <div class="study-video-caption">
+          <span data-fr>Animation de l'écoulement de puissance — lecture automatique en boucle, sans audio</span>
+          <span data-en>Power-flow animation — autoplaying loop, muted</span>
+        </div>
       </div>
     </div>
     <div class="study-banner"><strong data-fr>Résultat recherché</strong><strong data-en>Expected outcome</strong><p data-fr>Obtenir une vision claire de la répartition des puissances et de l'état électrique du réseau avant de passer à l'étude de protection.</p><p data-en>Obtain a clear view of power distribution and network electrical conditions before moving to protection analysis.</p></div>
@@ -144,8 +159,6 @@ nav{position:sticky;top:0;z-index:100;background:rgba(18,59,37,.97);backdrop-fil
         </div>
       </div>
       <div class="study-gallery">
-        <figure><img src="assets/img3.png" alt="ETAP protection coordination study"><figcaption data-fr>Configuration des protections sous ETAP</figcaption><figcaption data-en>Protection configuration in ETAP</figcaption></figure>
-        <figure><img src="assets/img4.png" alt="ETAP protection results"><figcaption data-fr>Analyse et vérification de la coordination</figcaption><figcaption data-en>Coordination analysis and verification</figcaption></figure>
       </div>
     </div>
     <div class="study-banner"><strong data-fr>Objectif final</strong><strong data-en>Final objective</strong><p data-fr>Construire une protection fiable et sélective du réseau, tout en conservant la continuité de service autant que possible.</p><p data-en>Build a reliable and selective protection scheme while preserving service continuity as much as possible.</p></div>
