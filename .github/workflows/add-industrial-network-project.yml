@@ -28,9 +28,9 @@ jobs:
               print('Industrial project card already present.')
               raise SystemExit(0)
 
-          card = '''\n<article class="project" id="industrial-network-project"><div class="cover"><img src="assets/img1.png" alt="Industrial Electrical Network ETAP"><span class="pnum">04</span></div><div class="pbody"><h3><span data-fr>Réseau Électrique Industriel — Load Flow</span><span data-en>Industrial Electrical Network — Load Flow</span></h3><p data-fr>Modélisation et analyse Load Flow d'un réseau électrique industriel sous ETAP.</p><p data-en>Modelling and load-flow analysis of an industrial electrical network using ETAP.</p><div class="tags"><span class="tag">ETAP</span><span class="tag">Load Flow</span><span class="tag">Industrial Network</span></div><a class="gallery-btn" href="etap-industrial-network.html"><i class="fa-solid fa-arrow-right"></i><span data-fr>Voir le projet</span><span data-en>View project</span></a></div></article>'''
+          card = '''\n<article class="project" id="industrial-network-project"><div class="cover"><img src="assets/img1.png" alt="Industrial Electrical Network ETAP"><span class="pnum">05</span></div><div class="pbody"><h3><span data-fr>Réseau Électrique Industriel — Load Flow</span><span data-en>Industrial Electrical Network — Load Flow</span></h3><p data-fr>Modélisation et analyse Load Flow d'un réseau électrique industriel sous ETAP.</p><p data-en>Modelling and load-flow analysis of an industrial electrical network using ETAP.</p><div class="tags"><span class="tag">ETAP</span><span class="tag">Load Flow</span><span class="tag">Industrial Network</span></div><a class="gallery-btn" href="etap-industrial-network.html"><i class="fa-solid fa-arrow-right"></i><span data-fr>Voir le projet</span><span data-en>View project</span></a></div></article>'''
 
-          needle = '''</div>\n</section>\n\n<section class="section alt" id="experience">'''
+          needle = '''</div></div></section>\n\n<section class="section alt" id="experience">'''
           if needle not in html:
               raise SystemExit('Project section boundary not found; no changes made.')
 
