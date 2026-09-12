@@ -1,0 +1,94 @@
+name: Add CEV flow video
+
+on:
+  push:
+    paths:
+      - '.github/workflows/add-cev-flow-video.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update-page:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Add looping CEV flow video
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path('etap-industrial-network.html')
+          text = path.read_text(encoding='utf-8')
+
+          # Add styling for the video once.
+          if '.study-video' not in text:
+              marker = '.study-banner{margin-top:24px;padding:18px 20px;border-left:3px solid var(--lime);background:rgba(121,201,67,.08);border-radius:0 10px 10px 0}.study-banner strong{display:block;font-size:12px;margin-bottom:5px}.study-banner p{margin:0;color:var(--muted);font-size:11px;line-height:1.6}'
+              css = marker + '\n.study-video{margin-top:24px;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:9px;box-shadow:var(--shadow)}\n.study-video-media{width:100%;display:block;border-radius:8px;background:#061a0f;object-fit:contain;pointer-events:none}\n.study-video-caption{font-size:10.5px;color:var(--muted);text-align:center;padding:8px 3px 2px}\n'
+              if marker not in text:
+                  raise SystemExit('Expected study-banner CSS marker not found')
+              text = text.replace(marker, css, 1)
+
+          # Work only inside the Power Flow section.
+          power_match = re.search(r'(<section class="section study-section" id="power-flow">.*?</section>)', text, re.S)
+          if not power_match:
+              raise SystemExit('Power Flow section not found')
+          power = power_match.group(1)
+
+          # If img3/img4 were previously placed elsewhere, remove their figure blocks first.
+          def remove_figure_with_image(s, filename):
+              return re.sub(r'\s*<figure>\s*<img[^>]+src=["\']assets/' + re.escape(filename) + r'["\'][^>]*>.*?</figure>', '', s, flags=re.S)
+
+          text = remove_figure_with_image(text, 'img3.png')
+          text = remove_figure_with_image(text, 'img4.png')
+
+          # Recompute Power Flow section after the removals.
+          power_match = re.search(r'(<section class="section study-section" id="power-flow">.*?</section>)', text, re.S)
+          power = power_match.group(1)
+
+          # Add all four Power Flow screenshots if not already present.
+          if 'assets/img3.png' not in power or 'assets/img4.png' not in power:
+              img3_4 = '''\n        <figure><img src="assets/img3.png" alt="ETAP industrial network Power Flow result 3"><figcaption data-fr>Résultat Power Flow — vue complémentaire</figcaption><figcaption data-en>Power Flow result — additional view</figcaption></figure>\n        <figure><img src="assets/img4.png" alt="ETAP industrial network Power Flow result 4"><figcaption data-fr>Résultat Power Flow — vue complémentaire</figcaption><figcaption data-en>Power Flow result — additional view</figcaption></figure>'''
+              target = re.search(r'(<figure>\s*<img[^>]+src=["\']assets/img2\.png["\'][^>]*>.*?</figure>)', power, re.S)
+              if not target:
+                  raise SystemExit('img2 figure not found in Power Flow section')
+              power = power[:target.end()] + img3_4 + power[target.end():]
+
+          # Add the CEV flow video once, directly below the Power Flow gallery.
+          if 'assets/CEV-flow.mp4' not in power:
+              video = '''\n      <div class="study-video">\n        <video class="study-video-media" autoplay muted loop playsinline preload="auto" poster="assets/page.png" aria-label="CEV Power Flow animation">\n          <source src="assets/CEV-flow.mp4" type="video/mp4">\n        </video>\n        <div class="study-video-caption">\n          <span data-fr>Animation de l'écoulement de puissance — lecture automatique en boucle, sans audio</span>\n          <span data-en>Power-flow animation — autoplaying loop, muted</span>\n        </div>\n      </div>'''
+              gallery_end = power.find('</div>', power.find('<div class="study-gallery">'))
+              # Find the actual closing tag of the gallery by using the known gallery block boundaries.
+              gallery_match = re.search(r'(<div class="study-gallery">.*?</div>)', power, re.S)
+              if not gallery_match:
+                  raise SystemExit('Power Flow gallery not found')
+              power = power[:gallery_match.end()] + video + power[gallery_match.end():]
+
+          # Replace the updated Power Flow section in the full page.
+          text = text[:power_match.start()] + power + text[power_match.end():]
+
+          # Ensure the protection section contains no images/video from this addition.
+          protection_match = re.search(r'(<section class="section study-section" id="protection">.*?</section>)', text, re.S)
+          if protection_match:
+              protection = protection_match.group(1)
+              protection = re.sub(r'\s*<figure>.*?</figure>', '', protection, flags=re.S)
+              protection = protection.replace('assets/CEV-flow.mp4', '')
+              text = text[:protection_match.start()] + protection + text[protection_match.end():]
+
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit page update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add etap-industrial-network.html
+          if git diff --cached --quiet; then
+            echo "No changes needed"
+          else
+            git commit -m "Add looping CEV flow video to ETAP project"
+            git push
+          fi
