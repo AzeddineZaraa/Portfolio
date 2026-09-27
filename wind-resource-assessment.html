@@ -190,6 +190,17 @@ footer{background:var(--navy);color:#fff;padding:34px 0;text-align:center;font-s
   .result-row{font-size:10px}
 }
 
+
+/* Mobile title sizing */
+@media(max-width:560px){
+  .hero-content{width:calc(100% - 32px);min-width:0}
+  .hero-content h1{width:100%;max-width:100%;font-size:clamp(29px,8.2vw,40px);line-height:1.08;letter-spacing:-.035em;overflow-wrap:normal;word-break:normal}
+  .hero-content h1 span{display:block}
+}
+@media(max-width:380px){
+  .hero-content h1{font-size:clamp(27px,8vw,31px);line-height:1.1}
+}
+
 </style>
 </head>
 <body>
