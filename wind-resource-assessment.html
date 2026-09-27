@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Wind Resource Assessment — modélisation statistique du vent, profil vertical, courbe de puissance et estimation de production.">
+<title>Wind Resource Assessment | Azeddine Zaraa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--navy:#061a33;--navy2:#0b2848;--lime:#8fca3c;--lime2:#70a72b;--ink:#14202d;--muted:#607083;--paper:#fff;--paper2:#f5f8fb;--line:#e2e8ef;--shadow:0 12px 32px rgba(6,26,51,.07)}
+body.dark{--ink:#eef4fa;--muted:#9caebe;--paper:#0b1521;--paper2:#101d2b;--line:#243448;--shadow:0 12px 32px rgba(0,0,0,.2)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,Arial,sans-serif;transition:.2s}
+h1,h2,h3{font-family:Poppins,Arial,sans-serif;line-height:1.2}a{text-decoration:none;color:inherit}
+.container{width:min(1180px,calc(100% - 48px));margin:auto}
+[data-en]{display:none!important}body.en [data-fr]{display:none!important}body.en [data-en]{display:initial!important}
+
+nav{position:sticky;top:0;z-index:100;background:rgba(6,26,51,.97);backdrop-filter:blur(10px);border-bottom:1px solid #203852}
+.navbar{height:78px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;align-items:center;gap:10px}.logo{width:39px;height:39px;border-radius:10px;background:var(--lime);color:var(--navy);display:grid;place-items:center}
+.brand-name{font:700 16px Poppins;color:#fff}.brand-name span{color:var(--lime)}.brand-sub{font-size:10px;color:#aebdcd}
+.links{display:flex;gap:24px}.links a{font-size:12.5px;font-weight:600;color:#d7e1eb;padding:27px 0 7px;border-bottom:2px solid transparent}
+.links a:hover,.links a.active{color:var(--lime);border-color:var(--lime)}
+.actions{display:flex;align-items:center;gap:9px}.icon,.lang{background:transparent;color:#dce6f0;border:1px solid #2d435c;cursor:pointer}
+.icon{width:35px;height:35px;border-radius:50%}.lang{padding:7px 10px;border-radius:7px;font-weight:700}
+.cv{display:flex;gap:8px;align-items:center;padding:9px 13px;border:1px solid var(--lime);border-radius:7px;color:var(--lime);font-size:12px;font-weight:700}
+.cv:hover{background:var(--lime);color:var(--navy)}.menu{display:none;background:none;border:0;color:#fff;font-size:21px}
+.mobile{display:none;background:var(--navy);padding:10px 18px 15px;border-top:1px solid #203852}.mobile.open{display:block}
+.mobile a{display:block;padding:10px 0;color:#fff;border-bottom:1px solid #203852;font-size:13px}
+
+.hero{background:var(--paper);border-bottom:1px solid var(--line);padding:28px 0 0}
+.hero-cover{position:relative}.hero-image{width:100%;display:block;border-radius:16px;box-shadow:0 20px 55px rgba(6,26,51,.16);border:1px solid var(--line);background:#fff}
+.hero-toolbar{position:absolute;left:24px;right:24px;top:24px;display:flex;align-items:center;justify-content:space-between}
+.hero-toolbar .back{display:inline-flex;gap:8px;align-items:center;padding:10px 14px;border-radius:8px;background:rgba(3,19,39,.82);border:1px solid rgba(255,255,255,.22);color:#fff;backdrop-filter:blur(8px);font-size:12px;font-weight:700}
+.hero-toolbar .back:hover{color:var(--lime);border-color:var(--lime)}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;padding:9px 13px;border-radius:8px;background:rgba(3,19,39,.82);border:1px solid rgba(143,202,60,.55);color:#eff8e4;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;backdrop-filter:blur(8px)}
+.project-head{padding:38px 0 48px}.project-head-grid{display:grid;grid-template-columns:1.5fr .7fr;gap:34px;align-items:end}
+.eyebrow{color:var(--lime2);font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:13px}
+.project-head h1{margin:0;font-size:clamp(30px,4vw,48px);letter-spacing:-.03em}.project-head h1 span{color:var(--lime2)}
+.project-lead{max-width:800px;color:var(--muted);font-size:14px;line-height:1.8;margin:15px 0 0}
+.tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:20px}.tag{border:1px solid var(--line);border-radius:5px;padding:6px 10px;font-size:10.5px;color:var(--muted);font-weight:700;background:var(--paper2)}
+.head-meta{display:grid;grid-template-columns:1fr 1fr;gap:10px}.meta-box{background:var(--paper2);border:1px solid var(--line);border-radius:10px;padding:14px}
+.meta-box strong{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--lime2);margin-bottom:5px}.meta-box span{font-size:11px;color:var(--muted);line-height:1.45}
+
+.study-nav{position:sticky;top:78px;z-index:50;background:var(--paper);border-bottom:1px solid var(--line);box-shadow:0 5px 18px rgba(6,26,51,.05)}
+.study-nav-inner{display:flex;gap:8px;overflow:auto;padding:10px 0}
+.study-nav a{display:inline-flex;align-items:center;gap:8px;white-space:nowrap;padding:10px 14px;border:1px solid var(--line);border-radius:8px;font-size:11px;font-weight:800;color:var(--muted);background:var(--paper2)}
+.study-nav a:hover{border-color:var(--lime);color:var(--lime2)}
+.study-section{scroll-margin-top:135px}.section{padding:58px 0}.alt{background:var(--paper2)}
+.section-kicker{display:inline-flex;align-items:center;gap:7px;padding:6px 9px;border-radius:6px;background:rgba(143,202,60,.12);color:var(--lime2);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.section h2{font-size:28px;margin:0 0 10px}.study-intro{max-width:850px;color:var(--muted);font-size:13px;line-height:1.8;margin:0 0 26px}
+.study-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:20px;align-items:start}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px;box-shadow:var(--shadow)}
+.label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;font-weight:800;color:var(--lime2);margin-bottom:12px}
+.study-points{display:grid;gap:10px}.study-point{display:flex;gap:10px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:9px;background:var(--paper2)}
+.study-point i{color:var(--lime);margin-top:2px}.study-point strong{display:block;font-size:11px;margin-bottom:3px}.study-point span{font-size:11px;line-height:1.55;color:var(--muted)}
+.study-gallery{display:grid;grid-template-columns:1fr 1fr;gap:16px}.study-gallery figure{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:9px;box-shadow:var(--shadow)}
+.study-gallery img{width:100%;display:block;border-radius:8px;cursor:zoom-in;background:#fff}.study-gallery figcaption{font-size:10.5px;color:var(--muted);text-align:center;padding:8px 3px 2px}
+.study-video{grid-column:1 / -1;margin-top:24px;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px;box-shadow:var(--shadow)}
+.study-video-media{width:100%;max-height:680px;display:block;border-radius:8px;background:#061a33;object-fit:contain;pointer-events:none}
+.study-video-caption{font-size:10.5px;color:var(--muted);text-align:center;padding:8px 3px 2px}
+.study-banner{margin-top:24px;padding:18px 20px;border-left:3px solid var(--lime);background:rgba(143,202,60,.08);border-radius:0 10px 10px 0}
+.study-banner strong{display:block;font-size:12px;margin-bottom:5px}.study-banner p{margin:0;color:var(--muted);font-size:11px;line-height:1.6}
+
+.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.metric{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:18px}
+.metric i{color:var(--lime);font-size:17px;margin-bottom:10px}.metric strong{display:block;font-size:12px;margin-bottom:4px}.metric span{display:block;color:var(--muted);font-size:11px;line-height:1.5}
+
+.formula{font-family:Georgia,serif;font-size:20px;text-align:center;padding:22px 12px;border:1px dashed var(--line);border-radius:10px;background:var(--paper2);margin:12px 0;color:var(--ink)}
+.results-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.result-list{display:grid;gap:10px;margin-top:10px}
+.result-row{display:flex;justify-content:space-between;gap:15px;padding:11px 0;border-bottom:1px solid var(--line);font-size:11px}.result-row span{color:var(--muted)}.result-row strong{color:var(--ink)}
+
+.lightbox{display:none;position:fixed;inset:0;z-index:1000;background:#000d;align-items:center;justify-content:center;padding:20px}.lightbox.open{display:flex}
+.lightbox-inner{position:relative;width:min(1100px,94vw);max-height:90vh}.lightbox-inner img{width:100%;max-height:84vh;object-fit:contain;border-radius:8px;background:#fff}
+.lightbox-close{position:absolute;top:-44px;right:0;background:none;border:0;color:#fff;font-size:30px;cursor:pointer}.lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);background:#ffffff22;border:1px solid #ffffff55;color:#fff;width:42px;height:42px;border-radius:50%;font-size:18px;cursor:pointer;display:grid;place-items:center}
+.lightbox-prev{left:-56px}.lightbox-next{right:-56px}.lightbox-cap{color:#fff;font-size:12px;text-align:center;margin-top:12px}
+
+footer{background:var(--navy);color:#fff;padding:34px 0;text-align:center;font-size:10.5px;border-top:1px solid #203852}
+
+@media(max-width:950px){.links{gap:14px}.links a{font-size:11px}.metric-grid{grid-template-columns:1fr 1fr}.study-grid{grid-template-columns:1fr}}
+@media(max-width:800px){.container{width:calc(100% - 30px)}.navbar{height:68px}.links{display:none}.menu{display:block}.cv{display:none}
+.hero-toolbar{left:12px;right:12px;top:14px}.hero-toolbar .back{font-size:11px;padding:8px 10px}.hero-badge{font-size:9px;padding:8px 9px}
+.study-nav{top:68px}.project-head{padding:30px 0 38px}.project-head-grid{grid-template-columns:1fr;gap:22px}.study-gallery,.results-grid{grid-template-columns:1fr}.section h2{font-size:24px}.lightbox-prev{left:6px}.lightbox-next{right:6px}}
+@media(max-width:560px){.container{width:calc(100% - 24px)}.hero{padding-top:15px}.hero-image{border-radius:11px}.hero-toolbar{top:10px}.hero-toolbar .back span{display:none}.hero-badge{font-size:8px}.project-head h1{font-size:31px}.project-lead{font-size:13px}.metric-grid{grid-template-columns:1fr}.card{padding:18px}.study-gallery{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav>
+<div class="container navbar">
+<a class="brand" href="index.html#hero">
+<div class="logo"><i class="fa-solid fa-bolt"></i></div>
+<div><div class="brand-name">AZEDDINE <span>ZARAA</span></div><div class="brand-sub"><span data-fr>Génie Électrique &amp; Énergies Renouvelables</span><span data-en>Electrical Engineering &amp; Renewable Energy</span></div></div>
+</a>
+<div class="links">
+<a href="index.html#hero"><span data-fr>Accueil</span><span data-en>Home</span></a>
+<a href="index.html#about"><span data-fr>À propos</span><span data-en>About</span></a>
+<a href="index.html#skills"><span data-fr>Compétences</span><span data-en>Skills</span></a>
+<a href="index.html#projects" class="active"><span data-fr>Projets</span><span data-en>Projects</span></a>
+<a href="index.html#experience"><span data-fr>Expérience</span><span data-en>Experience</span></a>
+<a href="index.html#contact">Contact</a>
+</div>
+<div class="actions">
+<button class="icon" id="theme" aria-label="Theme"><i class="fa-solid fa-moon"></i></button>
+<button class="lang" id="language">EN</button>
+<a class="cv" href="assets/docs/cv.pdf" target="_blank"><span data-fr>Télécharger CV</span><span data-en>Download CV</span><i class="fa-solid fa-download"></i></a>
+<button class="menu" id="menub"><i class="fa-solid fa-bars"></i></button>
+</div>
+</div>
+<div class="mobile" id="mobile"><a href="index.html#hero">Accueil / Home</a><a href="index.html#projects">Projets / Projects</a><a href="index.html#contact">Contact</a></div>
+</nav>
+
+<header class="hero">
+<div class="container">
+<div class="hero-cover">
+<img class="hero-image" src="assets/Wind Resource Assessment/page de garde.png" alt="Wind Resource Assessment">
+<div class="hero-toolbar">
+<a class="back" href="index.html#projects"><i class="fa-solid fa-arrow-left"></i><span data-fr>Retour aux projets</span><span data-en>Back to projects</span></a>
+<div class="hero-badge"><i class="fa-solid fa-wind"></i> WIND ENERGY</div>
+</div>
+</div>
+</div>
+</header>
+
+<section class="project-head">
+<div class="container">
+<div class="project-head-grid">
+<div>
+<div class="eyebrow"><i class="fa-solid fa-wind"></i> WIND ENERGY • RESOURCE ASSESSMENT</div>
+<h1>Wind Resource <span>Assessment</span><br>Modeling &amp; Energy Production</h1>
+<p class="project-lead" data-fr>Évaluation de la ressource éolienne à partir d'une modélisation statistique du vent, de la génération d'une année synthétique de données, de l'extrapolation en hauteur et de la conversion du vent en puissance.</p>
+<p class="project-lead" data-en>Wind-resource assessment through statistical wind modelling, synthetic annual data generation, vertical wind extrapolation and conversion of wind speed into turbine power.</p>
+<div class="tags">
+<span class="tag">Python</span><span class="tag">Jupyter / Colab</span><span class="tag">Weibull</span><span class="tag">Wind Shear</span><span class="tag">Power Curve</span><span class="tag">Wind Rose</span>
+</div>
+</div>
+<div class="head-meta">
+<div class="meta-box"><strong data-fr>Type</strong><strong data-en>Type</strong><span>Mini Project</span></div>
+<div class="meta-box"><strong data-fr>Données</strong><strong data-en>Data</strong><span>8,760 hourly values</span></div>
+<div class="meta-box"><strong data-fr>Éolienne</strong><strong data-en>Turbine</strong><span>2 MW model</span></div>
+<div class="meta-box"><strong data-fr>Résultat</strong><strong data-en>Output</strong><span>Wind statistics &amp; energy estimate</span></div>
+</div>
+</div>
+</div>
+</section>
+
+<nav class="study-nav"><div class="container study-nav-inner">
+<a href="#weibull"><i class="fa-solid fa-chart-area"></i><span data-fr>Weibull</span><span data-en>Weibull</span></a>
+<a href="#annual"><i class="fa-solid fa-clock"></i><span data-fr>Année synthétique</span><span data-en>Synthetic year</span></a>
+<a href="#height"><i class="fa-solid fa-arrow-up"></i><span data-fr>Profil vertical</span><span data-en>Wind shear</span></a>
+<a href="#power"><i class="fa-solid fa-bolt"></i><span data-fr>Production</span><span data-en>Power &amp; energy</span></a>
+<a href="#gallery"><i class="fa-solid fa-images"></i><span data-fr>Galerie</span><span data-en>Gallery</span></a>
+</div></nav>
+
+<section class="section study-section" id="weibull">
+<div class="container">
+<div class="section-kicker"><i class="fa-solid fa-chart-area"></i> STATISTICAL MODEL</div>
+<h2><span data-fr>01 — Distribution de Weibull</span><span data-en>01 — Weibull Distribution</span></h2>
+<p class="study-intro" data-fr>La première étape consiste à décrire statistiquement la vitesse du vent avec une distribution de Weibull et à observer l'effet du paramètre de forme k sur la densité de probabilité.</p>
+<p class="study-intro" data-en>The first step is to describe wind speed statistically with a Weibull distribution and observe how the shape parameter k affects the probability density.</p>
+<div class="study-grid">
+<div class="card">
+<div class="label" data-fr>Modèle</div><div class="label" data-en>Model</div>
+<div class="formula">f(V)= (k/c)(V/c)<sup>k−1</sup> exp[−(V/c)<sup>k</sup>]</div>
+<div class="study-points">
+<div class="study-point"><i class="fa-solid fa-check"></i><div><strong>k = 1.5</strong><span data-fr>Distribution plus étalée avec une queue importante vers les vitesses élevées.</span><span data-en>Broader distribution with a longer high-speed tail.</span></div></div>
+<div class="study-point"><i class="fa-solid fa-check"></i><div><strong>k = 2.0</strong><span data-fr>Cas de type Rayleigh utilisé comme référence simple.</span><span data-en>Rayleigh-type case used as a simple reference.</span></div></div>
+<div class="study-point"><i class="fa-solid fa-check"></i><div><strong>k = 2.5 → 3.0</strong><span data-fr>Distribution plus concentrée autour d'une plage de vitesses typique.</span><span data-en>More concentrated distribution around a typical wind-speed range.</span></div></div>
+</div>
+</div>
+<div class="study-gallery">
+<figure><img src="assets/Wind Resource Assessment/Weibull_Distribution.png" alt="Weibull distribution"><figcaption>Weibull distribution — k = 1.5, 2.0, 2.5, 3.0</figcaption></figure>
+<figure><img src="assets/Wind Resource Assessment/Weibull_Probability_Density.png" alt="Weibull probability density"><figcaption data-fr>Densité de probabilité de la vitesse du vent</figcaption><figcaption data-en>Wind-speed probability density</figcaption></figure>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section alt study-section" id="annual">
+<div class="container">
+<div class="section-kicker"><i class="fa-solid fa-clock"></i> SYNTHETIC WIND YEAR</div>
+<h2><span data-fr>02 — Génération d'une année de vent</span><span data-en>02 — Synthetic Annual Wind Dataset</span></h2>
+<p class="study-intro" data-fr>Une série synthétique de 8 760 valeurs horaires est générée afin de représenter une année complète et d'analyser sa variabilité ainsi que ses statistiques mensuelles.</p>
+<p class="study-intro" data-en>A synthetic series of 8,760 hourly values is generated to represent a full year and analyse its variability and monthly statistics.</p>
+<div class="metric-grid">
+<div class="metric"><i class="fa-solid fa-calendar-days"></i><strong>8,760 h</strong><span data-fr>Nombre de valeurs horaires</span><span data-en>Hourly samples</span></div>
+<div class="metric"><i class="fa-solid fa-gauge-high"></i><strong>6.0 m/s</strong><span data-fr>Vitesse moyenne théorique utilisée</span><span data-en>Theoretical mean wind speed used</span></div>
+<div class="metric"><i class="fa-solid fa-chart-line"></i><strong>≈ 3.8 m/s</strong><span data-fr>Écart-type annoncé</span><span data-en>Reported standard deviation</span></div>
+<div class="metric"><i class="fa-solid fa-wind"></i><strong>≈ 24.5 m/s</strong><span data-fr>Pic observé dans la simulation</span><span data-en>Peak observed in the simulation</span></div>
+</div>
+<div class="study-grid" style="margin-top:20px">
+<div class="card">
+<div class="label" data-fr>Lecture des résultats</div><div class="label" data-en>Reading the results</div>
+<div class="study-points">
+<div class="study-point"><i class="fa-solid fa-wave-square"></i><div><strong data-fr>Variabilité horaire</strong><span data-fr>La série montre de fortes fluctuations à l'échelle horaire, compatibles avec une simulation stochastique.</span><span data-en>The series shows strong hourly fluctuations, consistent with a stochastic simulation.</span></div></div>
+<div class="study-point"><i class="fa-solid fa-calendar"></i><div><strong data-fr>Moyennes mensuelles</strong><span data-fr>Les moyennes mensuelles restent autour de 6 m/s, avec des variations limitées dans le jeu synthétique.</span><span data-en>Monthly means remain around 6 m/s, with limited variation in the synthetic dataset.</span></div></div>
+<div class="study-point"><i class="fa-solid fa-chart-column"></i><div><strong data-fr>Validation statistique</strong><span data-fr>La comparaison histogramme / Weibull permet de vérifier que la série générée suit la distribution visée.</span><span data-en>The histogram/Weibull comparison checks whether the generated series follows the target distribution.</span></div></div>
+</div>
+</div>
+<div class="study-gallery">
+<figure><img src="assets/Wind Resource Assessment/Annual_Wind_Speed_Evolution.png" alt="Annual hourly wind speed evolution"><figcaption data-fr>Évolution horaire sur une année synthétique</figcaption><figcaption data-en>Hourly wind-speed evolution over a synthetic year</figcaption></figure>
+<figure><img src="assets/Wind Resource Assessment/Monthly_Average_Wind_Speed.png" alt="Monthly average wind speed"><figcaption data-fr>Vitesse moyenne du vent par mois</figcaption><figcaption data-en>Monthly average wind speed</figcaption></figure>
+<figure><img src="assets/Wind Resource Assessment/Wind_Speed_Histogram.png" alt="Wind speed histogram"><figcaption data-fr>Histogramme des 8 760 vitesses simulées</figcaption><figcaption data-en>Histogram of 8,760 simulated wind speeds</figcaption></figure>
+<figure><img src="assets/Wind Resource Assessment/Simulated_vs_Weibull.png" alt="Simulated versus Weibull"><figcaption data-fr>Données simulées vs Weibull théorique</figcaption><figcaption data-en>Simulated data vs theoretical Weibull</figcaption></figure>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section study-section" id="height">
+<div class="container">
+<div class="section-kicker"><i class="fa-solid fa-arrow-up"></i> WIND SHEAR</div>
+<h2><span data-fr>03 — Vitesse du vent en fonction de la hauteur</span><span data-en>03 — Wind Speed vs Height</span></h2>
+<p class="study-intro" data-fr>La vitesse moyenne est extrapolée à différentes hauteurs avec la Power Law afin d'étudier l'effet du profil vertical du vent.</p>
+<p class="study-intro" data-en>Mean wind speed is extrapolated to different heights using the Power Law to study the vertical wind profile.</p>
+<div class="study-grid">
+<div class="card">
+<div class="label">Power Law</div>
+<div class="formula">V(H)=V<sub>ref</sub>(H/H<sub>ref</sub>)<sup>α</sup></div>
+<div class="study-points">
+<div class="study-point"><i class="fa-solid fa-leaf"></i><div><strong>α = 0.14</strong><span data-fr>Terrain ouvert — croissance plus faible de la vitesse avec la hauteur.</span><span data-en>Open terrain — lower wind-speed growth with height.</span></div></div>
+<div class="study-point"><i class="fa-solid fa-building"></i><div><strong>α = 0.20</strong><span data-fr>Terrain modéré — cas intermédiaire utilisé dans l'étude.</span><span data-en>Moderate terrain — intermediate case used in the study.</span></div></div>
+<div class="study-point"><i class="fa-solid fa-city"></i><div><strong>α = 0.30</strong><span data-fr>Terrain urbain — influence plus forte du cisaillement vertical.</span><span data-en>Urban terrain — stronger vertical shear effect.</span></div></div>
+</div>
+</div>
+<div class="study-gallery">
+<figure><img src="assets/Wind Resource Assessment/Wind_Speed_Profile_Height.png" alt="Wind speed profile versus height"><figcaption data-fr>Profil vertical de la vitesse du vent</figcaption><figcaption data-en>Vertical wind-speed profile</figcaption></figure>
+<figure><img src="assets/Wind Resource Assessment/Simulated_vs_Weibull.png" alt="Wind profile supporting chart"><figcaption data-fr>Résultat statistique utilisé pour l'évaluation</figcaption><figcaption data-en>Statistical result used for the assessment</figcaption></figure>
+</div>
+</div>
+<div class="study-banner"><strong data-fr>Point clé</strong><strong data-en>Key point</strong><p data-fr>La vitesse du vent augmente avec la hauteur. Le choix de la hauteur de moyeu doit donc être associé au modèle de cisaillement et aux caractéristiques du site.</p><p data-en>Wind speed increases with height. Hub-height selection should therefore be linked to the wind-shear model and site characteristics.</p></div>
+</div>
+</section>
+
+<section class="section alt study-section" id="power">
+<div class="container">
+<div class="section-kicker"><i class="fa-solid fa-bolt"></i> POWER &amp; ENERGY</div>
+<h2><span data-fr>04 — Courbe de puissance et estimation de production</span><span data-en>04 — Power Curve and Energy Estimate</span></h2>
+<p class="study-intro" data-fr>La vitesse du vent est convertie en puissance électrique à l'aide d'une courbe de puissance simplifiée d'une éolienne de 2 MW.</p>
+<p class="study-intro" data-en>Wind speed is converted into electrical power using a simplified 2 MW wind-turbine power curve.</p>
+<div class="results-grid">
+<div class="card">
+<div class="label" data-fr>Caractéristiques du modèle</div><div class="label" data-en>Model characteristics</div>
+<div class="result-list">
+<div class="result-row"><span data-fr>Puissance nominale</span><span data-en>Rated power</span><strong>2 MW</strong></div>
+<div class="result-row"><span data-fr>Vitesse de démarrage</span><span data-en>Cut-in speed</span><strong>3 m/s</strong></div>
+<div class="result-row"><span data-fr>Vitesse nominale</span><span data-en>Rated speed</span><strong>12 m/s</strong></div>
+<div class="result-row"><span data-fr>Vitesse d'arrêt</span><span data-en>Cut-out speed</span><strong>25 m/s</strong></div>
+</div>
+<div class="study-points" style="margin-top:15px">
+<div class="study-point"><i class="fa-solid fa-bolt"></i><div><strong data-fr>3 → 12 m/s</strong><span data-fr>La puissance augmente progressivement jusqu'à la puissance nominale.</span><span data-en>Power rises progressively up to rated power.</span></div></div>
+<div class="study-point"><i class="fa-solid fa-pause"></i><div><strong data-fr>12 → 25 m/s</strong><span data-fr>Le modèle maintient 2 MW jusqu'à la vitesse d'arrêt.</span><span data-en>The model holds 2 MW up to cut-out speed.</span></div></div>
+</div>
+</div>
+<div class="study-gallery">
+<figure><img src="assets/Wind Resource Assessment/Power_Curve.png" alt="2 MW wind turbine power curve"><figcaption data-fr>Courbe de puissance de l'éolienne</figcaption><figcaption data-en>Wind-turbine power curve</figcaption></figure>
+<figure><img src="assets/Wind Resource Assessment/Wind_Turbine_Power_Output.png" alt="Wind turbine power output over the year"><figcaption data-fr>Production électrique horaire simulée</figcaption><figcaption data-en>Simulated hourly turbine power output</figcaption></figure>
+</div>
+</div>
+<div class="metric-grid" style="margin-top:20px">
+<div class="metric"><i class="fa-solid fa-gauge-high"></i><strong>0.64 MW</strong><span data-fr>Puissance moyenne annoncée</span><span data-en>Reported mean power</span></div>
+<div class="metric"><i class="fa-solid fa-battery-three-quarters"></i><strong>5.6 GWh</strong><span data-fr>AEP annuelle annoncée</span><span data-en>Reported annual energy production</span></div>
+<div class="metric"><i class="fa-solid fa-percent"></i><strong>32 %</strong><span data-fr>Facteur de charge annoncé</span><span data-en>Reported capacity factor</span></div>
+<div class="metric"><i class="fa-solid fa-solar-panel"></i><strong>1/2</strong><span data-fr>Puissance moyenne / puissance nominale</span><span data-en>Mean power / rated power</span></div>
+</div>
+<div class="study-banner"><strong data-fr>Cohérence énergétique</strong><strong data-en>Energy consistency</strong><p>0.64 MW × 8,760 h ≈ 5.61 GWh/an, cohérent avec la valeur AEP annoncée de 5.6 GWh/an.</p></div>
+</div>
+</section>
+
+<section class="section study-section" id="gallery">
+<div class="container">
+<div class="section-kicker"><i class="fa-solid fa-images"></i> RESULTS GALLERY</div>
+<h2><span data-fr>05 — Synthèse des résultats</span><span data-en>05 — Results Gallery</span></h2>
+<p class="study-intro" data-fr>Les figures regroupent les principaux résultats de l'étude : statistique du vent, année synthétique, profil vertical, puissance et direction du vent.</p>
+<p class="study-intro" data-en>The figures below bring together the main study results: wind statistics, synthetic year, vertical profile, power and wind direction.</p>
+<div class="study-gallery" style="grid-template-columns:1fr 1fr">
+<figure><img src="assets/Wind Resource Assessment/Annual_Available_Energy.png" alt="Annual available energy"><figcaption data-fr>Énergie annuelle disponible</figcaption><figcaption data-en>Annual available energy</figcaption></figure>
+<figure><img src="assets/Wind Resource Assessment/Rose.png" alt="Wind rose"><figcaption data-fr>Rose des vents — vitesse et direction</figcaption><figcaption data-en>Wind rose — wind speed and direction</figcaption></figure>
+<figure><img src="assets/Wind Resource Assessment/Weibull_Distribution.png" alt="Weibull distribution"><figcaption>Weibull distribution</figcaption></figure>
+<figure><img src="assets/Wind Resource Assessment/Simulated_vs_Weibull.png" alt="Simulated versus Weibull"><figcaption>Simulated vs Weibull</figcaption></figure>
+<figure><img src="assets/Wind Resource Assessment/Annual_Wind_Speed_Evolution.png" alt="Annual wind speed evolution"><figcaption data-fr>Évolution annuelle du vent</figcaption><figcaption data-en>Annual wind-speed evolution</figcaption></figure>
+<figure><img src="assets/Wind Resource Assessment/Wind_Speed_Profile_Height.png" alt="Wind speed profile height"><figcaption data-fr>Vitesse du vent selon la hauteur</figcaption><figcaption data-en>Wind speed versus height</figcaption></figure>
+</div>
+</div>
+</section>
+
+<footer><div class="container">© 2026 Azeddine Zaraa — Wind Resource Assessment</div></footer>
+
+<div class="lightbox" id="lightbox">
+<div class="lightbox-inner">
+<button class="lightbox-close" onclick="closeGallery()">&times;</button>
+<button class="lightbox-nav lightbox-prev" onclick="navGallery(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+<img id="lightbox-img" alt="Expanded project figure">
+<button class="lightbox-nav lightbox-next" onclick="navGallery(1)"><i class="fa-solid fa-chevron-right"></i></button>
+<div class="lightbox-cap" id="lightbox-cap"></div>
+</div>
+</div>
+
+<script>
+const body=document.body,lang=document.getElementById('language'),theme=document.getElementById('theme'),menu=document.getElementById('mobile'),menub=document.getElementById('menub');
+const gallery=[
+{src:'assets/Wind Resource Assessment/page de garde.png',fr:'Page de garde du mini-projet',en:'Mini-project cover'},
+{src:'assets/Wind Resource Assessment/Weibull_Distribution.png',fr:'Distribution de Weibull',en:'Weibull distribution'},
+{src:'assets/Wind Resource Assessment/Weibull_Probability_Density.png',fr:'Densité de probabilité',en:'Probability density'},
+{src:'assets/Wind Resource Assessment/Annual_Wind_Speed_Evolution.png',fr:'Évolution horaire sur une année',en:'Hourly evolution over a year'},
+{src:'assets/Wind Resource Assessment/Monthly_Average_Wind_Speed.png',fr:'Vitesse moyenne par mois',en:'Monthly average wind speed'},
+{src:'assets/Wind Resource Assessment/Wind_Speed_Histogram.png',fr:'Histogramme des vitesses',en:'Wind-speed histogram'},
+{src:'assets/Wind Resource Assessment/Simulated_vs_Weibull.png',fr:'Données simulées vs Weibull',en:'Simulated data vs Weibull'},
+{src:'assets/Wind Resource Assessment/Wind_Speed_Profile_Height.png',fr:'Profil vertical du vent',en:'Vertical wind profile'},
+{src:'assets/Wind Resource Assessment/Power_Curve.png',fr:'Courbe de puissance',en:'Power curve'},
+{src:'assets/Wind Resource Assessment/Wind_Turbine_Power_Output.png',fr:'Puissance de l’éolienne',en:'Wind-turbine power output'},
+{src:'assets/Wind Resource Assessment/Annual_Available_Energy.png',fr:'Énergie annuelle disponible',en:'Annual available energy'},
+{src:'assets/Wind Resource Assessment/Rose.png',fr:'Rose des vents',en:'Wind rose'}
+];
+let currentIndex=0;
+function showImage(){const item=gallery[currentIndex];document.getElementById('lightbox-img').src=item.src;document.getElementById('lightbox-cap').textContent=(body.classList.contains('en')?item.en:item.fr)+' ('+(currentIndex+1)+'/'+gallery.length+')';}
+function openGallery(src){currentIndex=gallery.findIndex(x=>x.src===src);if(currentIndex<0)currentIndex=0;showImage();document.getElementById('lightbox').classList.add('open');}
+function closeGallery(){document.getElementById('lightbox').classList.remove('open');}
+function navGallery(dir){currentIndex=(currentIndex+dir+gallery.length)%gallery.length;showImage();}
+document.querySelectorAll('.study-gallery img,.hero-image').forEach(img=>img.addEventListener('click',()=>openGallery(img.getAttribute('src'))));
+document.getElementById('lightbox').addEventListener('click',e=>{if(e.target.id==='lightbox')closeGallery();});
+document.addEventListener('keydown',e=>{if(!document.getElementById('lightbox').classList.contains('open'))return;if(e.key==='Escape')closeGallery();if(e.key==='ArrowLeft')navGallery(-1);if(e.key==='ArrowRight')navGallery(1);});
+lang.onclick=()=>{const en=!body.classList.contains('en');body.classList.toggle('en',en);document.documentElement.lang=en?'en':'fr';lang.textContent=en?'FR':'EN';if(document.getElementById('lightbox').classList.contains('open'))showImage();};
+theme.onclick=()=>{body.classList.toggle('dark');theme.innerHTML=body.classList.contains('dark')?'<i class="fa-solid fa-sun"></i>':'<i class="fa-solid fa-moon"></i>';};
+menub.onclick=()=>{const open=menu.classList.toggle('open');menub.innerHTML=open?'<i class="fa-solid fa-xmark"></i>':'<i class="fa-solid fa-bars"></i>';};
+document.querySelectorAll('.mobile a').forEach(a=>a.onclick=()=>menu.classList.remove('open'));
+</script>
+</body>
+</html>
