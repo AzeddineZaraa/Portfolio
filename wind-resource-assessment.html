@@ -32,8 +32,17 @@ nav{position:sticky;top:0;z-index:100;background:rgba(6,26,51,.97);backdrop-filt
 
 .hero{background:#061a33;border-bottom:1px solid var(--line);padding:0;overflow:hidden}
 .hero .container{width:100%;max-width:none;margin:0;padding:0}
-.hero-cover{position:relative;width:100%;height:calc(100vh - 78px);height:calc(100svh - 78px);min-height:600px;margin:0 auto;overflow:hidden;border-radius:0;box-shadow:none;border:0;background:#061a33;display:flex;align-items:center;justify-content:center}.hero-image{width:100%;height:100%;display:block;object-fit:contain;object-position:center center;border-radius:0;box-shadow:none;border:0;background:#061a33;transform:scale(1)}
-.hero-toolbar{position:absolute;left:24px;right:24px;top:24px;display:flex;align-items:center;justify-content:space-between}
+.hero-cover{position:relative;width:100%;height:calc(100vh - 78px);height:calc(100svh - 78px);min-height:600px;margin:0 auto;overflow:hidden;border-radius:0;box-shadow:none;border:0;background:#061a33;display:flex;align-items:center;justify-content:flex-start}
+.hero-image{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;object-position:center center;border-radius:0;box-shadow:none;border:0;background:#061a33;transform:none}
+.hero-cover:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(3,25,24,.96) 0%,rgba(3,25,24,.82) 35%,rgba(3,25,24,.28) 68%,rgba(3,25,24,.06) 100%),linear-gradient(0deg,rgba(3,25,24,.4),transparent 40%);pointer-events:none}
+.hero-content{position:relative;z-index:2;width:min(1180px,calc(100% - 48px));margin:0 auto;padding:70px 0 30px;color:#fff}
+.hero-kicker{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:5px;background:var(--lime);color:#10251b;font-size:11px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;margin-bottom:22px}
+.hero-content h1{max-width:780px;margin:0;font-size:clamp(42px,6.2vw,82px);line-height:1.02;letter-spacing:-.045em;font-weight:800;text-transform:uppercase;color:#fff}
+.hero-content h1 span{display:block;color:var(--lime)}
+.hero-description{max-width:760px;margin:18px 0 0;color:#e2ebe8;font-size:clamp(14px,1.3vw,18px);line-height:1.7}
+.hero-rule{width:100px;height:4px;background:var(--lime);margin:24px 0}
+.hero-tags{display:flex;gap:9px;flex-wrap:wrap}.hero-tags span{padding:9px 13px;border:1px solid rgba(255,255,255,.38);border-radius:6px;background:rgba(3,19,39,.34);color:#fff;font-size:11px;font-weight:700;backdrop-filter:blur(5px)}
+.hero-toolbar{position:absolute;left:24px;right:24px;top:24px;z-index:3;display:flex;align-items:center;justify-content:space-between}
 .hero-toolbar .back{display:inline-flex;gap:8px;align-items:center;padding:10px 14px;border-radius:8px;background:rgba(3,19,39,.82);border:1px solid rgba(255,255,255,.22);color:#fff;backdrop-filter:blur(8px);font-size:12px;font-weight:700}
 .hero-toolbar .back:hover{color:var(--lime);border-color:var(--lime)}
 .hero-badge{display:inline-flex;align-items:center;gap:7px;padding:9px 13px;border-radius:8px;background:rgba(3,19,39,.82);border:1px solid rgba(143,202,60,.55);color:#eff8e4;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;backdrop-filter:blur(8px)}
@@ -84,9 +93,9 @@ footer{background:var(--navy);color:#fff;padding:34px 0;text-align:center;font-s
 
 @media(max-width:950px){.links{gap:14px}.links a{font-size:11px}.metric-grid{grid-template-columns:1fr 1fr}.study-grid{grid-template-columns:1fr}}
 @media(max-width:800px){.container{width:calc(100% - 30px)}.navbar{height:68px}.links{display:none}.menu{display:block}.cv{display:none}
-.hero-toolbar{left:12px;right:12px;top:14px}.hero-toolbar .back{font-size:11px;padding:8px 10px}.hero-badge{font-size:9px;padding:8px 9px}
+.hero-toolbar{left:12px;right:12px;top:14px}.hero-toolbar .back{font-size:11px;padding:8px 10px}.hero-badge{font-size:9px;padding:8px 9px}.hero-content{width:calc(100% - 36px);padding-top:76px}.hero-content h1{font-size:clamp(38px,8vw,62px)}
 .study-nav{position:sticky;top:68px;bottom:auto;width:100%;padding:0 15px;border-right:0;border-bottom:1px solid var(--line)}.study-nav-inner{flex-direction:row;gap:8px;overflow-x:auto;padding:10px 0}.toc-title{display:none}.study-nav a{white-space:nowrap;flex:0 0 auto;padding:9px 12px}.project-head,.study-section,footer{margin-left:0}.project-head{padding:30px 0 38px}.project-head-grid{grid-template-columns:1fr;gap:22px}.study-gallery,.results-grid{grid-template-columns:1fr}.section h2{font-size:24px}.lightbox-prev{left:6px}.lightbox-next{right:6px}}
-@media(max-width:560px){.container{width:calc(100% - 24px)}.hero .container{width:100%}.hero{padding-top:0}.hero-cover{height:calc(100vh - 68px);height:calc(100svh - 68px);min-height:500px;border-radius:0}.hero-toolbar{top:10px}.hero-toolbar .back span{display:none}.hero-badge{font-size:8px}.project-head h1{font-size:31px}.project-lead{font-size:13px}.metric-grid{grid-template-columns:1fr}.card{padding:18px}.study-gallery{grid-template-columns:1fr}}
+@media(max-width:560px){.container{width:calc(100% - 24px)}.hero .container{width:100%}.hero{padding-top:0}.hero-cover{height:calc(100vh - 68px);height:calc(100svh - 68px);min-height:500px;border-radius:0}.hero-toolbar{top:10px}.hero-content{width:calc(100% - 30px);padding-top:70px}.hero-content h1{font-size:clamp(36px,10vw,52px)}.hero-description{font-size:13px;max-width:95%}.hero-tags span{font-size:9px;padding:7px 9px}.hero-rule{margin:18px 0}.hero-toolbar .back span{display:none}.hero-badge{font-size:8px}.project-head h1{font-size:31px}.project-lead{font-size:13px}.metric-grid{grid-template-columns:1fr}.card{padding:18px}.study-gallery{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -117,7 +126,15 @@ footer{background:var(--navy);color:#fff;padding:34px 0;text-align:center;font-s
 <header class="hero">
 <div class="container">
 <div class="hero-cover">
-<img class="hero-image" src="assets/Wind Resource Assessment/page de garde.png" alt="Wind Resource Assessment">
+<img class="hero-image" src="assets/Wind Resource Assessment/arriere plan.png" alt="Wind farm landscape background">
+<div class="hero-content">
+<div class="hero-kicker"><i class="fa-solid fa-wind"></i> MINI PROJECT • WIND ENERGY</div>
+<h1>Wind Resource <span>Assessment</span></h1>
+<p class="hero-description" data-fr>Modélisation statistique du vent, simulation des données, profil vertical et estimation de la production énergétique.</p>
+<p class="hero-description" data-en>Statistical wind modelling, data simulation, vertical wind profile and energy production estimation.</p>
+<div class="hero-rule"></div>
+<div class="hero-tags"><span>Weibull Distribution</span><span>Wind Data Simulation</span><span>Vertical Profile</span><span>Power Curve</span><span>Energy Production</span></div>
+</div>
 <div class="hero-toolbar">
 <a class="back" href="index.html#projects"><i class="fa-solid fa-arrow-left"></i><span data-fr>Retour aux projets</span><span data-en>Back to projects</span></a>
 <div class="hero-badge"><i class="fa-solid fa-wind"></i> WIND ENERGY</div>
@@ -126,27 +143,6 @@ footer{background:var(--navy);color:#fff;padding:34px 0;text-align:center;font-s
 </div>
 </header>
 
-<section class="project-head">
-<div class="container">
-<div class="project-head-grid">
-<div>
-<div class="eyebrow"><i class="fa-solid fa-wind"></i> WIND ENERGY • RESOURCE ASSESSMENT</div>
-<h1>Wind Resource <span>Assessment</span><br>Modeling &amp; Energy Production</h1>
-<p class="project-lead" data-fr>Évaluation de la ressource éolienne à partir d'une modélisation statistique du vent, de la génération d'une année synthétique de données, de l'extrapolation en hauteur et de la conversion du vent en puissance.</p>
-<p class="project-lead" data-en>Wind-resource assessment through statistical wind modelling, synthetic annual data generation, vertical wind extrapolation and conversion of wind speed into turbine power.</p>
-<div class="tags">
-<span class="tag">Python</span><span class="tag">Jupyter / Colab</span><span class="tag">Weibull</span><span class="tag">Wind Shear</span><span class="tag">Power Curve</span><span class="tag">Wind Rose</span>
-</div>
-</div>
-<div class="head-meta">
-<div class="meta-box"><strong data-fr>Type</strong><strong data-en>Type</strong><span>Mini Project</span></div>
-<div class="meta-box"><strong data-fr>Données</strong><strong data-en>Data</strong><span>8,760 hourly values</span></div>
-<div class="meta-box"><strong data-fr>Éolienne</strong><strong data-en>Turbine</strong><span>2 MW model</span></div>
-<div class="meta-box"><strong data-fr>Résultat</strong><strong data-en>Output</strong><span>Wind statistics &amp; energy estimate</span></div>
-</div>
-</div>
-</div>
-</section>
 
 <nav class="study-nav" aria-label="Sommaire du projet"><div class="container study-nav-inner">
 <div class="toc-title"><i class="fa-solid fa-list"></i> <span data-fr> SOMMAIRE</span><span data-en> CONTENTS</span></div>
